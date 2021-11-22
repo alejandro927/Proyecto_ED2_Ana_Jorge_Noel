@@ -1,10 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package proyecto_edd2_ana_noel_jorge;
 
+import java.awt.HeadlessException;
 import java.io.EOFException;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -24,16 +20,16 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 
 /**
- *
- * @author aleja
+ * @authors 
+ * Ana Romero
+ * Jorge Zuniga
+ * Noel Martinez
  */
 public class Main extends javax.swing.JFrame {
 
-    /**
-     * Creates new form Main
-     */
     public Main() {
         initComponents();
+        //this.setExtendedState(MAXIMIZED_BOTH);
     }
 
     /**
@@ -45,17 +41,18 @@ public class Main extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
-        Salida = new javax.swing.JButton();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        jTable_Display = new javax.swing.JTable();
-        jLabel_nombreArchivo = new javax.swing.JLabel();
-        jLabelLlvePrincipal = new javax.swing.JLabel();
         jb_inicio = new javax.swing.JButton();
         jb_anterior = new javax.swing.JButton();
         jb_siguiente = new javax.swing.JButton();
         jb_final = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
+        Salida = new javax.swing.JButton();
+        jLabel_nombreArchivo = new javax.swing.JLabel();
+        jLabelLlvePrincipal = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jTable_Display = new javax.swing.JTable();
+        FONDO = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         NuevoFile = new javax.swing.JMenuItem();
@@ -66,13 +63,76 @@ public class Main extends javax.swing.JFrame {
         jMenu3 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jb_inicio.setBackground(new java.awt.Color(102, 102, 102));
+        jb_inicio.setForeground(new java.awt.Color(153, 153, 153));
+        jb_inicio.setText("Inicio");
+        jb_inicio.setEnabled(false);
+        jb_inicio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jb_inicioActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jb_inicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 380, -1, -1));
+
+        jb_anterior.setForeground(new java.awt.Color(153, 153, 153));
+        jb_anterior.setText("Anterior");
+        jb_anterior.setEnabled(false);
+        jb_anterior.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jb_anteriorActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jb_anterior, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 380, -1, -1));
+
+        jb_siguiente.setForeground(new java.awt.Color(153, 153, 153));
+        jb_siguiente.setText("Siguiente");
+        jb_siguiente.setEnabled(false);
+        jb_siguiente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jb_siguienteActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jb_siguiente, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 380, -1, -1));
+
+        jb_final.setForeground(new java.awt.Color(153, 153, 153));
+        jb_final.setText("Final");
+        jb_final.setEnabled(false);
+        jb_final.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jb_finalActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jb_final, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 380, -1, -1));
+
+        jButton1.setForeground(new java.awt.Color(153, 153, 153));
+        jButton1.setText("Vaciar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 380, -1, -1));
+
+        Salida.setForeground(new java.awt.Color(153, 153, 153));
         Salida.setText("Salida");
         Salida.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 SalidaActionPerformed(evt);
             }
         });
+        getContentPane().add(Salida, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 380, 73, -1));
+
+        jLabel_nombreArchivo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel_nombreArchivo.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel_nombreArchivo.setText("Archivo Actual:");
+        getContentPane().add(jLabel_nombreArchivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(242, 21, 370, 16));
+
+        jLabelLlvePrincipal.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabelLlvePrincipal.setForeground(new java.awt.Color(255, 255, 255));
+        jLabelLlvePrincipal.setText("Llave Primaria:");
+        getContentPane().add(jLabelLlvePrincipal, new org.netbeans.lib.awtextra.AbsoluteConstraints(242, 55, 218, -1));
 
         jTable_Display.setModel(new DefaultTableModel() {
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -81,105 +141,15 @@ public class Main extends javax.swing.JFrame {
         });
         jTable_Display.setGridColor(new java.awt.Color(153, 0, 204));
         jTable_Display.setRowSelectionAllowed(false);
-        jTable_Display.setShowHorizontalLines(false);
         jScrollPane3.setViewportView(jTable_Display);
 
-        jLabel_nombreArchivo.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel_nombreArchivo.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel_nombreArchivo.setText("Nombre del Archivo:");
+        getContentPane().add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(242, 94, 609, 266));
 
-        jLabelLlvePrincipal.setForeground(new java.awt.Color(0, 0, 0));
-        jLabelLlvePrincipal.setText("Llave Principal: ");
+        FONDO.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGES/Principal Page.jpg"))); // NOI18N
+        getContentPane().add(FONDO, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 0, -1, 420));
 
-        jb_inicio.setText("Inicio");
-        jb_inicio.setEnabled(false);
-        jb_inicio.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jb_inicioActionPerformed(evt);
-            }
-        });
-
-        jb_anterior.setText("Anterior");
-        jb_anterior.setEnabled(false);
-        jb_anterior.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jb_anteriorActionPerformed(evt);
-            }
-        });
-
-        jb_siguiente.setText("Siguiente");
-        jb_siguiente.setEnabled(false);
-        jb_siguiente.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jb_siguienteActionPerformed(evt);
-            }
-        });
-
-        jb_final.setText("Final");
-        jb_final.setEnabled(false);
-        jb_final.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jb_finalActionPerformed(evt);
-            }
-        });
-
-        jButton1.setText("Clear");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabelLlvePrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(56, 56, 56)
-                .addComponent(jLabel_nombreArchivo, javax.swing.GroupLayout.PREFERRED_SIZE, 370, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(148, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane3))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(23, 23, 23)
-                        .addComponent(jb_inicio)
-                        .addGap(18, 18, 18)
-                        .addComponent(jb_anterior)
-                        .addGap(18, 18, 18)
-                        .addComponent(jb_siguiente)
-                        .addGap(18, 18, 18)
-                        .addComponent(jb_final)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(Salida, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(23, 23, 23))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(48, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel_nombreArchivo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabelLlvePrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jb_inicio)
-                    .addComponent(jb_anterior)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jb_siguiente)
-                        .addComponent(jButton1)
-                        .addComponent(jb_final)
-                        .addComponent(Salida)))
-                .addContainerGap())
-        );
+        jPanel1.setBackground(new java.awt.Color(156, 111, 73));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 160, 420));
 
         jMenu1.setText("Archivos");
 
@@ -225,32 +195,8 @@ public class Main extends javax.swing.JFrame {
 
         setJMenuBar(jMenuBar1);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void SalidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SalidaActionPerformed
-        // TODO add your handling code here:
-        if (!saved) {
-            int save = JOptionPane.showConfirmDialog(this, "¿Desea guardar el "
-                    + "archivo antes de salir?", "Guardar y cerrar.", JOptionPane.YES_NO_OPTION);
-            if (save == JOptionPane.YES_OPTION) {
-                //saveFileActionPerformed(evt);
-            }
-        }
-        System.exit(0);
-
-    }//GEN-LAST:event_SalidaActionPerformed
 
     private void NuevoFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NuevoFileActionPerformed
         // TODO add your handling code here:
@@ -277,9 +223,9 @@ public class Main extends javax.swing.JFrame {
                     String indexFileName = path;
                     File archivoIndicesAux = new File(indexFileName + ".index");
                     fs = new FileOutputStream(archivoIndicesAux);
-                    ObjectOutputStream os = new ObjectOutputStream(fs);
-                    os.flush();
-                    os.close();
+                    try (ObjectOutputStream os = new ObjectOutputStream(fs)) {
+                        os.flush();
+                    }
                     archivoIndices = archivoIndicesAux;
                 } catch (FileNotFoundException ex) {
                 } catch (IOException ex) {
@@ -302,6 +248,7 @@ public class Main extends javax.swing.JFrame {
             archivoEnUso = new ArchivoDeRegistro(archivoCargado, archivoIndices);
             jLabel_nombreArchivo.setText("Archivo Actual: " + archivoCargado.getName());
             jTable_Display.setModel(new DefaultTableModel() {
+                @Override
                 public boolean isCellEditable(int rowIndex, int columnIndex) {
                     return false;
                 }
@@ -382,23 +329,53 @@ public class Main extends javax.swing.JFrame {
                 File archivoIndicesACargar = new File(pathParaCargar);
                 loadFile(archiAuxNoSeCual, archivoIndicesACargar);
             }
-        } catch (Exception e) {
+        } catch (HeadlessException e) {
         }
     }//GEN-LAST:event_AbrirFileActionPerformed
 
-    private void jb_inicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_inicioActionPerformed
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        clearDisplay(false);
+    }//GEN-LAST:event_jButton1ActionPerformed
 
-        jb_siguiente.setEnabled(true);
-        jb_final.setEnabled(true);
+    private void jb_finalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_finalActionPerformed
+        int target = archivoEnUso.getNoRegistros() - (archivoEnUso.getNoRegistros() % 20);
 
-        jb_anterior.setEnabled(false);
-        jb_inicio.setEnabled(false);
+        try (RandomAccessFile raf = new RandomAccessFile(archivoCargado, "r")) {
 
-        currentPosList = archivoEnUso.tamanioMetadata();
-        currentRegList = 0;
+            int largo = archivoEnUso.longitudRegistro();
+            raf.seek(currentPosList);
+
+            while (currentRegList < target) {
+                if (raf.readChar() != '*') {
+                    currentRegList++;
+                }
+                currentPosList += largo;
+                raf.seek(currentPosList);
+            }
+
+            jb_siguiente.setEnabled(false);
+            jb_final.setEnabled(false);
+
+            jb_anterior.setEnabled(true);
+            jb_inicio.setEnabled(true);
+
+            listAfter();
+
+        } catch (Exception e) {
+        }
+    }//GEN-LAST:event_jb_finalActionPerformed
+
+    private void jb_siguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_siguienteActionPerformed
+        if (archivoEnUso.getNoRegistros() - 20 <= currentRegList) {
+            jb_siguiente.setEnabled(false);
+            jb_final.setEnabled(false);
+        }
+
+        jb_anterior.setEnabled(true);
+        jb_inicio.setEnabled(true);
 
         listAfter();
-    }//GEN-LAST:event_jb_inicioActionPerformed
+    }//GEN-LAST:event_jb_siguienteActionPerformed
 
     private void jb_anteriorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_anteriorActionPerformed
 
@@ -432,49 +409,31 @@ public class Main extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jb_anteriorActionPerformed
 
-    private void jb_siguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_siguienteActionPerformed
-        if (archivoEnUso.getNoRegistros() - 20 <= currentRegList) {
-            jb_siguiente.setEnabled(false);
-            jb_final.setEnabled(false);
-        }
+    private void jb_inicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_inicioActionPerformed
 
-        jb_anterior.setEnabled(true);
-        jb_inicio.setEnabled(true);
+        jb_siguiente.setEnabled(true);
+        jb_final.setEnabled(true);
+
+        jb_anterior.setEnabled(false);
+        jb_inicio.setEnabled(false);
+
+        currentPosList = archivoEnUso.tamanioMetadata();
+        currentRegList = 0;
 
         listAfter();
-    }//GEN-LAST:event_jb_siguienteActionPerformed
+    }//GEN-LAST:event_jb_inicioActionPerformed
 
-    private void jb_finalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_finalActionPerformed
-        int target = archivoEnUso.getNoRegistros() - (archivoEnUso.getNoRegistros() % 20);
-
-        try (RandomAccessFile raf = new RandomAccessFile(archivoCargado, "r")) {
-
-            int largo = archivoEnUso.longitudRegistro();
-            raf.seek(currentPosList);
-
-            while (currentRegList < target) {
-                if (raf.readChar() != '*') {
-                    currentRegList++;
-                }
-                currentPosList += largo;
-                raf.seek(currentPosList);
+    private void SalidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SalidaActionPerformed
+        // TODO add your handling code here:
+        if (!saved) {
+            int save = JOptionPane.showConfirmDialog(this, "¿Desea guardar el "
+                + "archivo antes de salir?", "Guardar y cerrar.", JOptionPane.YES_NO_OPTION);
+            if (save == JOptionPane.YES_OPTION) {
+                //saveFileActionPerformed(evt);
             }
-
-            jb_siguiente.setEnabled(false);
-            jb_final.setEnabled(false);
-
-            jb_anterior.setEnabled(true);
-            jb_inicio.setEnabled(true);
-
-            listAfter();
-
-        } catch (Exception e) {
         }
-    }//GEN-LAST:event_jb_finalActionPerformed
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        clearDisplay(false);
-    }//GEN-LAST:event_jButton1ActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_SalidaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -504,16 +463,15 @@ public class Main extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Main().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new Main().setVisible(true);
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem AbrirFile;
     private javax.swing.JMenuItem CerrarFile;
+    private javax.swing.JLabel FONDO;
     private javax.swing.JMenuItem GuardarFile;
     private javax.swing.JMenuItem NuevoFile;
     private javax.swing.JButton Salida;
@@ -595,6 +553,7 @@ public class Main extends javax.swing.JFrame {
 
         jLabel_nombreArchivo.setText("Current file: " + archivoCargado.getName());
         jTable_Display.setModel(new DefaultTableModel() {
+            @Override
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return false;
             }
@@ -649,6 +608,7 @@ public class Main extends javax.swing.JFrame {
         //Reset table
         if (newTableModel) {
             jTable_Display.setModel(new DefaultTableModel() {
+                @Override
                 public boolean isCellEditable(int rowIndex, int columnIndex) {
                     return false;
                 }
