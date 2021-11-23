@@ -23,7 +23,5 @@ public class Registro {
 
     public void añadirCampo(Campo campo) {
         this.Campos.add(campo);
-    }
-    
-    
+    }  
 }

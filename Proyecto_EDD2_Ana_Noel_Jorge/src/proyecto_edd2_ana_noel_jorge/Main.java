@@ -29,9 +29,9 @@ public class Main extends javax.swing.JFrame {
 
     public Main() {
         initComponents();
+        this.setLocationRelativeTo(null);
         //this.setExtendedState(MAXIMIZED_BOTH);
     }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -41,6 +41,43 @@ public class Main extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        pantalla_Crear_Campos = new javax.swing.JDialog();
+        jLabel1 = new javax.swing.JLabel();
+        tf_NombreCampo = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        tipoEntero = new javax.swing.JRadioButton();
+        tipoDecimal = new javax.swing.JRadioButton();
+        tipoString = new javax.swing.JRadioButton();
+        tipoChar = new javax.swing.JRadioButton();
+        CrearCampo = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        rb_LlavePrincipal = new javax.swing.JRadioButton();
+        rb_LlaveSecundaria = new javax.swing.JRadioButton();
+        js_tamanioCadena = new javax.swing.JSpinner();
+        jLabel4 = new javax.swing.JLabel();
+        rb_campoNormal = new javax.swing.JRadioButton();
+        labelFondo = new javax.swing.JLabel();
+        lista_de_campos = new javax.swing.JDialog();
+        jPanel4 = new javax.swing.JPanel();
+        jLabel_Title_Campos = new javax.swing.JLabel();
+        jButton_agregar = new javax.swing.JButton();
+        jButton_modificar = new javax.swing.JButton();
+        jButton_eliminar = new javax.swing.JButton();
+        jButton_hacerPrincipal = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jList_campos = new javax.swing.JList<>();
+        jLabel_BG_campos = new javax.swing.JLabel();
+        GrupoTipoDeDato = new javax.swing.ButtonGroup();
+        LlavePrincipal_Secundaria = new javax.swing.ButtonGroup();
+        ModificarCampo = new javax.swing.JDialog();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel14 = new javax.swing.JLabel();
+        jtf_actualCampo = new javax.swing.JTextField();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        jtf_nuevoCampo = new javax.swing.JTextField();
+        jb_modificarCampoAceptar = new javax.swing.JButton();
+        jl_mod_BG1 = new javax.swing.JLabel();
         jb_inicio = new javax.swing.JButton();
         jb_anterior = new javax.swing.JButton();
         jb_siguiente = new javax.swing.JButton();
@@ -48,25 +85,193 @@ public class Main extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         Salida = new javax.swing.JButton();
         jLabel_nombreArchivo = new javax.swing.JLabel();
-        jLabelLlvePrincipal = new javax.swing.JLabel();
+        jLabelLlavePrincipal = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTable_Display = new javax.swing.JTable();
-        FONDO = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
+        jpb_porcentaje = new javax.swing.JProgressBar();
+        jLabel5 = new javax.swing.JLabel();
+        FONDO = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
+        Archivos = new javax.swing.JMenu();
         NuevoFile = new javax.swing.JMenuItem();
         AbrirFile = new javax.swing.JMenuItem();
         GuardarFile = new javax.swing.JMenuItem();
         CerrarFile = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
-        jMenu3 = new javax.swing.JMenu();
+        Campos = new javax.swing.JMenu();
+        jMenuItem_listarCampos = new javax.swing.JMenuItem();
+        Registros = new javax.swing.JMenu();
+
+        pantalla_Crear_Campos.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel1.setText("Nombre del Campo:");
+        pantalla_Crear_Campos.getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(33, 60, 132, -1));
+        pantalla_Crear_Campos.getContentPane().add(tf_NombreCampo, new org.netbeans.lib.awtextra.AbsoluteConstraints(197, 56, 162, -1));
+
+        jLabel2.setText("Tipo De Dato del Campo:");
+        pantalla_Crear_Campos.getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(33, 165, -1, -1));
+
+        tipoEntero.setBackground(new java.awt.Color(142, 63, 65));
+        GrupoTipoDeDato.add(tipoEntero);
+        tipoEntero.setText("Entero");
+        pantalla_Crear_Campos.getContentPane().add(tipoEntero, new org.netbeans.lib.awtextra.AbsoluteConstraints(197, 109, 110, -1));
+
+        GrupoTipoDeDato.add(tipoDecimal);
+        tipoDecimal.setText("Decimal");
+        pantalla_Crear_Campos.getContentPane().add(tipoDecimal, new org.netbeans.lib.awtextra.AbsoluteConstraints(197, 143, 110, -1));
+
+        GrupoTipoDeDato.add(tipoString);
+        tipoString.setSelected(true);
+        tipoString.setText("Cadena de Texto");
+        tipoString.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                tipoStringStateChanged(evt);
+            }
+        });
+        pantalla_Crear_Campos.getContentPane().add(tipoString, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 180, -1, -1));
+
+        GrupoTipoDeDato.add(tipoChar);
+        tipoChar.setText("Caracter");
+        pantalla_Crear_Campos.getContentPane().add(tipoChar, new org.netbeans.lib.awtextra.AbsoluteConstraints(197, 211, 110, -1));
+
+        CrearCampo.setText("Aceptar");
+        CrearCampo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                CrearCampoMouseClicked(evt);
+            }
+        });
+        pantalla_Crear_Campos.getContentPane().add(CrearCampo, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 390, 102, -1));
+
+        jLabel3.setText("Tipo de Llave");
+        pantalla_Crear_Campos.getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 280, 100, -1));
+
+        LlavePrincipal_Secundaria.add(rb_LlavePrincipal);
+        rb_LlavePrincipal.setText("Principal");
+        pantalla_Crear_Campos.getContentPane().add(rb_LlavePrincipal, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 260, -1, -1));
+
+        LlavePrincipal_Secundaria.add(rb_LlaveSecundaria);
+        rb_LlaveSecundaria.setText("Secundaria");
+        pantalla_Crear_Campos.getContentPane().add(rb_LlaveSecundaria, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 300, -1, -1));
+
+        js_tamanioCadena.setModel(new javax.swing.SpinnerNumberModel(15, 2, 255, 1));
+        pantalla_Crear_Campos.getContentPane().add(js_tamanioCadena, new org.netbeans.lib.awtextra.AbsoluteConstraints(337, 180, 70, -1));
+
+        jLabel4.setText("Tamaño Cadena");
+        pantalla_Crear_Campos.getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 160, -1, -1));
+
+        LlavePrincipal_Secundaria.add(rb_campoNormal);
+        rb_campoNormal.setSelected(true);
+        rb_campoNormal.setText("Campo Ordinario");
+        pantalla_Crear_Campos.getContentPane().add(rb_campoNormal, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 340, -1, -1));
+
+        labelFondo.setPreferredSize(new java.awt.Dimension(1587, 545));
+        pantalla_Crear_Campos.getContentPane().add(labelFondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 430, 450));
+
+        lista_de_campos.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel_Title_Campos.setFont(new java.awt.Font("BankGothic Lt BT", 3, 36)); // NOI18N
+        jLabel_Title_Campos.setForeground(new java.awt.Color(65, 67, 106));
+        jLabel_Title_Campos.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel_Title_Campos.setText("Campos");
+        jLabel_Title_Campos.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(65, 67, 106), 3));
+        jPanel4.add(jLabel_Title_Campos, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 20, 210, -1));
+
+        jButton_agregar.setBackground(new java.awt.Color(65, 67, 106));
+        jButton_agregar.setFont(new java.awt.Font("BankGothic Md BT", 1, 14)); // NOI18N
+        jButton_agregar.setForeground(new java.awt.Color(255, 204, 0));
+        jButton_agregar.setText("Agregar");
+        jButton_agregar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, null, java.awt.Color.yellow, null, null));
+        jButton_agregar.setBorderPainted(false);
+        jButton_agregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_agregarActionPerformed(evt);
+            }
+        });
+        jPanel4.add(jButton_agregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 90, 100, -1));
+
+        jButton_modificar.setBackground(new java.awt.Color(65, 67, 106));
+        jButton_modificar.setFont(new java.awt.Font("BankGothic Md BT", 1, 14)); // NOI18N
+        jButton_modificar.setForeground(new java.awt.Color(255, 204, 0));
+        jButton_modificar.setText("Modificar");
+        jButton_modificar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, null, java.awt.Color.yellow, null, null));
+        jButton_modificar.setBorderPainted(false);
+        jButton_modificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_modificarActionPerformed(evt);
+            }
+        });
+        jPanel4.add(jButton_modificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 130, 100, -1));
+
+        jButton_eliminar.setBackground(new java.awt.Color(65, 67, 106));
+        jButton_eliminar.setFont(new java.awt.Font("BankGothic Md BT", 1, 14)); // NOI18N
+        jButton_eliminar.setForeground(new java.awt.Color(255, 204, 0));
+        jButton_eliminar.setText("Eliminar");
+        jButton_eliminar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, null, java.awt.Color.yellow, null, null));
+        jButton_eliminar.setBorderPainted(false);
+        jButton_eliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_eliminarActionPerformed(evt);
+            }
+        });
+        jPanel4.add(jButton_eliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 170, 100, -1));
+
+        jButton_hacerPrincipal.setBackground(new java.awt.Color(65, 67, 106));
+        jButton_hacerPrincipal.setFont(new java.awt.Font("BankGothic Md BT", 1, 14)); // NOI18N
+        jButton_hacerPrincipal.setForeground(new java.awt.Color(255, 204, 0));
+        jButton_hacerPrincipal.setText("Hacer llave principal");
+        jButton_hacerPrincipal.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, null, java.awt.Color.yellow, null, null));
+        jButton_hacerPrincipal.setBorderPainted(false);
+        jButton_hacerPrincipal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_hacerPrincipalActionPerformed(evt);
+            }
+        });
+        jPanel4.add(jButton_hacerPrincipal, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 210, 220, -1));
+
+        jList_campos.setModel(new DefaultListModel());
+        jScrollPane2.setViewportView(jList_campos);
+
+        jPanel4.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 90, 197, 234));
+        jPanel4.add(jLabel_BG_campos, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 540, 390));
+
+        lista_de_campos.getContentPane().add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 390));
+
+        ModificarCampo.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel14.setFont(new java.awt.Font("BankGothic Lt BT", 0, 18)); // NOI18N
+        jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel14.setText("Modificar Campo");
+        jPanel2.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 20, 190, 40));
+
+        jtf_actualCampo.setEditable(false);
+        jPanel2.add(jtf_actualCampo, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 80, 170, 30));
+
+        jLabel12.setText("Nombre Actual: ");
+        jPanel2.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 90, -1, -1));
+
+        jLabel13.setText("Nuevo Nombre:");
+        jPanel2.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 140, -1, -1));
+        jPanel2.add(jtf_nuevoCampo, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 130, 170, 30));
+
+        jb_modificarCampoAceptar.setText("Aceptar");
+        jb_modificarCampoAceptar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jb_modificarCampoAceptarActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jb_modificarCampoAceptar, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 210, 130, -1));
+        jPanel2.add(jl_mod_BG1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 400, 300));
+
+        ModificarCampo.getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 400, 300));
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setIconImage(new javax.swing.ImageIcon("./src/IMAGES/x.png").getImage());
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jb_inicio.setBackground(new java.awt.Color(102, 102, 102));
-        jb_inicio.setForeground(new java.awt.Color(153, 153, 153));
         jb_inicio.setText("Inicio");
         jb_inicio.setEnabled(false);
         jb_inicio.addActionListener(new java.awt.event.ActionListener() {
@@ -74,9 +279,8 @@ public class Main extends javax.swing.JFrame {
                 jb_inicioActionPerformed(evt);
             }
         });
-        getContentPane().add(jb_inicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 380, -1, -1));
+        getContentPane().add(jb_inicio, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 380, -1, -1));
 
-        jb_anterior.setForeground(new java.awt.Color(153, 153, 153));
         jb_anterior.setText("Anterior");
         jb_anterior.setEnabled(false);
         jb_anterior.addActionListener(new java.awt.event.ActionListener() {
@@ -84,9 +288,8 @@ public class Main extends javax.swing.JFrame {
                 jb_anteriorActionPerformed(evt);
             }
         });
-        getContentPane().add(jb_anterior, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 380, -1, -1));
+        getContentPane().add(jb_anterior, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 380, -1, -1));
 
-        jb_siguiente.setForeground(new java.awt.Color(153, 153, 153));
         jb_siguiente.setText("Siguiente");
         jb_siguiente.setEnabled(false);
         jb_siguiente.addActionListener(new java.awt.event.ActionListener() {
@@ -94,9 +297,8 @@ public class Main extends javax.swing.JFrame {
                 jb_siguienteActionPerformed(evt);
             }
         });
-        getContentPane().add(jb_siguiente, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 380, -1, -1));
+        getContentPane().add(jb_siguiente, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 380, -1, -1));
 
-        jb_final.setForeground(new java.awt.Color(153, 153, 153));
         jb_final.setText("Final");
         jb_final.setEnabled(false);
         jb_final.addActionListener(new java.awt.event.ActionListener() {
@@ -106,16 +308,14 @@ public class Main extends javax.swing.JFrame {
         });
         getContentPane().add(jb_final, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 380, -1, -1));
 
-        jButton1.setForeground(new java.awt.Color(153, 153, 153));
         jButton1.setText("Vaciar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 380, -1, -1));
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 380, -1, -1));
 
-        Salida.setForeground(new java.awt.Color(153, 153, 153));
         Salida.setText("Salida");
         Salida.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -125,14 +325,12 @@ public class Main extends javax.swing.JFrame {
         getContentPane().add(Salida, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 380, 73, -1));
 
         jLabel_nombreArchivo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel_nombreArchivo.setForeground(new java.awt.Color(255, 255, 255));
         jLabel_nombreArchivo.setText("Archivo Actual:");
-        getContentPane().add(jLabel_nombreArchivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(242, 21, 370, 16));
+        getContentPane().add(jLabel_nombreArchivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 20, 270, 16));
 
-        jLabelLlvePrincipal.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabelLlvePrincipal.setForeground(new java.awt.Color(255, 255, 255));
-        jLabelLlvePrincipal.setText("Llave Primaria:");
-        getContentPane().add(jLabelLlvePrincipal, new org.netbeans.lib.awtextra.AbsoluteConstraints(242, 55, 218, -1));
+        jLabelLlavePrincipal.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabelLlavePrincipal.setText("Llave Primaria:");
+        getContentPane().add(jLabelLlavePrincipal, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 50, 270, -1));
 
         jTable_Display.setModel(new DefaultTableModel() {
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -143,15 +341,20 @@ public class Main extends javax.swing.JFrame {
         jTable_Display.setRowSelectionAllowed(false);
         jScrollPane3.setViewportView(jTable_Display);
 
-        getContentPane().add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(242, 94, 609, 266));
-
-        FONDO.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGES/Principal Page.jpg"))); // NOI18N
-        getContentPane().add(FONDO, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 0, -1, 420));
+        getContentPane().add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 100, 609, 266));
 
         jPanel1.setBackground(new java.awt.Color(156, 111, 73));
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 160, 420));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 160, 410));
+        getContentPane().add(jpb_porcentaje, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 70, 450, -1));
 
-        jMenu1.setText("Archivos");
+        jLabel5.setFont(new java.awt.Font("Dialog", 3, 20)); // NOI18N
+        jLabel5.setText("EL ARCHIVERO");
+        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 10, 160, 50));
+
+        FONDO.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGES/Principal Page.jpg"))); // NOI18N
+        getContentPane().add(FONDO, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, -10, 720, 420));
+
+        Archivos.setText("Archivos");
 
         NuevoFile.setText("Nuevo Archivo");
         NuevoFile.addActionListener(new java.awt.event.ActionListener() {
@@ -159,7 +362,7 @@ public class Main extends javax.swing.JFrame {
                 NuevoFileActionPerformed(evt);
             }
         });
-        jMenu1.add(NuevoFile);
+        Archivos.add(NuevoFile);
 
         AbrirFile.setText("Abrir Archivo");
         AbrirFile.addActionListener(new java.awt.event.ActionListener() {
@@ -167,7 +370,7 @@ public class Main extends javax.swing.JFrame {
                 AbrirFileActionPerformed(evt);
             }
         });
-        jMenu1.add(AbrirFile);
+        Archivos.add(AbrirFile);
 
         GuardarFile.setText("Guardar Archivo");
         GuardarFile.addActionListener(new java.awt.event.ActionListener() {
@@ -175,7 +378,7 @@ public class Main extends javax.swing.JFrame {
                 GuardarFileActionPerformed(evt);
             }
         });
-        jMenu1.add(GuardarFile);
+        Archivos.add(GuardarFile);
 
         CerrarFile.setText("Cerrar Archivo");
         CerrarFile.addActionListener(new java.awt.event.ActionListener() {
@@ -183,15 +386,24 @@ public class Main extends javax.swing.JFrame {
                 CerrarFileActionPerformed(evt);
             }
         });
-        jMenu1.add(CerrarFile);
+        Archivos.add(CerrarFile);
 
-        jMenuBar1.add(jMenu1);
+        jMenuBar1.add(Archivos);
 
-        jMenu2.setText("Campos");
-        jMenuBar1.add(jMenu2);
+        Campos.setText("Campos");
 
-        jMenu3.setText("jMenu3");
-        jMenuBar1.add(jMenu3);
+        jMenuItem_listarCampos.setText("Menu de campos");
+        jMenuItem_listarCampos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem_listarCamposActionPerformed(evt);
+            }
+        });
+        Campos.add(jMenuItem_listarCampos);
+
+        jMenuBar1.add(Campos);
+
+        Registros.setText("En construccion...");
+        jMenuBar1.add(Registros);
 
         setJMenuBar(jMenuBar1);
 
@@ -254,12 +466,12 @@ public class Main extends javax.swing.JFrame {
                 }
             });
             saved = true;
-            nuevo = false;/*
+            nuevo = false;
             jButton_agregar.setEnabled(true);
             jButton_modificar.setEnabled(true);
             jButton_eliminar.setEnabled(true);
             jButton_hacerPrincipal.setEnabled(true);
-             */
+             
         }
     }//GEN-LAST:event_NuevoFileActionPerformed
 
@@ -277,7 +489,7 @@ public class Main extends javax.swing.JFrame {
         jLabel_nombreArchivo.setText("Nombre del Archivo:");
         archivoCargado = null;
         clearDisplay(true);
-        jLabelLlvePrincipal.setText("Llave principal: ");
+        jLabelLlavePrincipal.setText("Llave principal: ");
         jb_inicio.setEnabled(false);
         jb_final.setEnabled(false);
         jb_anterior.setEnabled(false);
@@ -311,15 +523,16 @@ public class Main extends javax.swing.JFrame {
                 CerrarFileActionPerformed(evt); //Al correr el programa y abrir el primer archivo hace una corrida de esta linea, la cual no deberia pasar
                 // porque por default no hay archivo cargado
             }
+
             nuevo = false;
-            JFileChooser jfc = new JFileChooser("./Files"); //donde deseamos que aparezca
+            JFileChooser archivo = new JFileChooser("./Files"); //donde deseamos que aparezca
             //crear los filtros
             FileNameExtensionFilter filtro = new FileNameExtensionFilter("Archivos de registro ANJ", "ANJ");
             //setear los filtros
-            jfc.setFileFilter(filtro);//forma 1: marcado como seleccionado
-            int seleccion = jfc.showOpenDialog(this);
-            if (seleccion == JFileChooser.APPROVE_OPTION && jfc.getSelectedFile().isFile()) {
-                File archiAuxNoSeCual = jfc.getSelectedFile();
+            archivo.setFileFilter(filtro);//forma 1: marcado como seleccionado
+            int seleccion = archivo.showOpenDialog(this);
+            if (seleccion == JFileChooser.APPROVE_OPTION && archivo.getSelectedFile().isFile()) {
+                File archiAuxNoSeCual = archivo.getSelectedFile();
                 String pathParaCargar = archiAuxNoSeCual.getPath();
                 if (pathParaCargar.endsWith(".ANJ")) {
                     pathParaCargar = pathParaCargar.substring(0, pathParaCargar.length() - 6);
@@ -340,7 +553,7 @@ public class Main extends javax.swing.JFrame {
     private void jb_finalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_finalActionPerformed
         int target = archivoEnUso.getNoRegistros() - (archivoEnUso.getNoRegistros() % 20);
 
-        try (RandomAccessFile raf = new RandomAccessFile(archivoCargado, "r")) {
+        try (RandomAccessFile raf = new RandomAccessFile(archivoCargado, "rw")) {
 
             int largo = archivoEnUso.longitudRegistro();
             raf.seek(currentPosList);
@@ -429,11 +642,288 @@ public class Main extends javax.swing.JFrame {
             int save = JOptionPane.showConfirmDialog(this, "¿Desea guardar el "
                 + "archivo antes de salir?", "Guardar y cerrar.", JOptionPane.YES_NO_OPTION);
             if (save == JOptionPane.YES_OPTION) {
-                //saveFileActionPerformed(evt);
+                GuardarFileActionPerformed(evt);
             }
         }
+        JOptionPane.showMessageDialog(this, "Gracias por usar el programa que tenga buen dia!");
         System.exit(0);
     }//GEN-LAST:event_SalidaActionPerformed
+
+    private void jMenuItem_listarCamposActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_listarCamposActionPerformed
+        if (!verifyOpen()) {
+            return;
+        }
+        lista_de_campos.pack();
+        lista_de_campos.setLocationRelativeTo(this);
+        lista_de_campos.setModal(true);
+        lista_de_campos.setVisible(true);
+    }//GEN-LAST:event_jMenuItem_listarCamposActionPerformed
+
+    private void tipoStringStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_tipoStringStateChanged
+        if (tipoString.isSelected()) {
+            js_tamanioCadena.setEnabled(true);
+        } else {
+            js_tamanioCadena.setEnabled(false);
+        }
+    }//GEN-LAST:event_tipoStringStateChanged
+
+    private void CrearCampoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CrearCampoMouseClicked
+        String nombreCampo = tf_NombreCampo.getText();
+        nombreCampo = nombreCampo.strip().toUpperCase();
+
+        boolean repetido = false;
+        if (nombreCampo == null || nombreCampo.equals("")) {
+            return;
+        }
+        if (nombreCampo.length() > 25) {
+            JOptionPane.showMessageDialog(pantalla_Crear_Campos, "El campo no puede tener un nombre mayor a 25",
+                "ERROR", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        String nombreSinEspacios = nombreCampo;
+
+        for (int i = nombreCampo.length(); i < 25; i++) {
+            nombreCampo += " ";
+        }
+        String auxValidacion;
+        for (int i = 0; i < archivoEnUso.getCamposDelArchivo().size(); i++) {
+            auxValidacion = archivoEnUso.getCamposDelArchivo().get(i).getNombreCampo();
+            if (auxValidacion.equalsIgnoreCase(nombreCampo)) { //Checks repetition
+                repetido = true;
+                break;
+            }
+        }
+        if (repetido) {
+            JOptionPane.showMessageDialog(pantalla_Crear_Campos, "El campo ya existe. Intente con otro nombre",
+                "ERROR", JOptionPane.ERROR_MESSAGE);
+        } else {
+            DefaultTableModel m = (DefaultTableModel) jTable_Display.getModel();
+            m.addColumn(nombreSinEspacios);
+            jTable_Display.setModel(m);
+
+            if (tipoEntero.isSelected()) {
+                CampoEntero campo = new CampoEntero(nombreCampo + "_int");
+                archivoEnUso.getCamposDelArchivo().add(campo);
+            } else if (tipoDecimal.isSelected()) {
+                CampoDecimal campo = new CampoDecimal(nombreCampo + "_dec");
+                archivoEnUso.getCamposDelArchivo().add(campo);
+            } else if (tipoChar.isSelected()) {
+                CampoCaracter campo = new CampoCaracter(nombreCampo + "_car");
+                archivoEnUso.getCamposDelArchivo().add(campo);
+            } else if (tipoString.isSelected()) {
+                CampoTexto campo = new CampoTexto(nombreCampo + "_str");
+                campo.setLongitud((Integer) js_tamanioCadena.getValue());
+                js_tamanioCadena.setValue(15);
+                archivoEnUso.getCamposDelArchivo().add(campo);
+            }
+            if (archivoEnUso.getLlavePrincipal() != -1) {
+                tieneLlavePrincipal = true;
+            }
+            if (rb_LlavePrincipal.isSelected()) {
+
+                if (!tieneLlavePrincipal) {
+                    jLabelLlavePrincipal.setText("Llave principal: " + nombreSinEspacios);
+                    archivoEnUso.setLlavePrincipal(archivoEnUso.getCamposDelArchivo().size() - 1);
+                    tieneLlavePrincipal = true;
+                } else {
+                    int seleccion = JOptionPane.showConfirmDialog(pantalla_Crear_Campos, "¿Desea cambiar la llave principal a este campo?",
+                        "Cambiar llave principal", JOptionPane.INFORMATION_MESSAGE);
+                    if (seleccion == JOptionPane.YES_OPTION) {
+                        jLabelLlavePrincipal.setText("Llave principal: " + nombreSinEspacios);
+                        archivoEnUso.setLlavePrincipal(archivoEnUso.getCamposDelArchivo().size() - 1);
+                    }
+                }
+
+            } else if (rb_LlaveSecundaria.isSelected()) {
+                archivoEnUso.getSecundarias().add(archivoEnUso.getCamposDelArchivo().size() - 1);
+            }
+            JOptionPane.showMessageDialog(pantalla_Crear_Campos, "Campo agregado exitosamente.");
+            DefaultListModel mod = (DefaultListModel) jList_campos.getModel();
+            mod.addElement(nombreSinEspacios);
+            jList_campos.setModel(mod);
+
+            saved = false;
+            tf_NombreCampo.setText("");
+            tipoString.setSelected(true);
+            rb_campoNormal.setSelected(true);
+        }
+    }//GEN-LAST:event_CrearCampoMouseClicked
+
+    private void jButton_agregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_agregarActionPerformed
+        pantalla_Crear_Campos.pack();
+        pantalla_Crear_Campos.setLocationRelativeTo(lista_de_campos);
+        pantalla_Crear_Campos.setModal(true);
+        pantalla_Crear_Campos.setVisible(true);
+        rb_campoNormal.setSelected(true);
+    }//GEN-LAST:event_jButton_agregarActionPerformed
+
+    private void jButton_modificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_modificarActionPerformed
+        try {
+            int selection = jList_campos.getSelectedIndex();
+
+            // No hay nada seleccionado
+            if (selection == -1) {
+                JOptionPane.showMessageDialog(lista_de_campos, "Debe seleccionar un campo.");
+                return;
+            }
+
+            DefaultListModel mod = (DefaultListModel) jList_campos.getModel();
+
+            jtf_actualCampo.setText((String) mod.getElementAt(selection));
+            jtf_nuevoCampo.setText("");
+
+            ModificarCampo.pack();
+            ModificarCampo.setLocationRelativeTo(this);
+            ModificarCampo.setModal(true);
+            ModificarCampo.setVisible(true);
+
+        } catch (Exception e) {
+        }
+    }//GEN-LAST:event_jButton_modificarActionPerformed
+
+    private void jButton_eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_eliminarActionPerformed
+        int selection = jList_campos.getSelectedIndex();
+        // No hay nada seleccionado
+        if (selection == -1) {
+            JOptionPane.showMessageDialog(lista_de_campos, "Debe seleccionar un campo.");
+            return;
+        }
+
+        DefaultListModel mod = (DefaultListModel) jList_campos.getModel();
+
+        if (selection == archivoEnUso.getLlavePrincipal()) {
+            JOptionPane.showMessageDialog(lista_de_campos, "El campo seleccionado "
+                + "es llave principal, no puede ser eliminado. Asigne otro campo como "
+                + "llave primaria antes de eliminar", "ERROR", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        int remove = JOptionPane.showConfirmDialog(lista_de_campos, "¿Desea eliminar el "
+            + "campo " + ((String) mod.get(selection)).strip() + "?", "Eliminar campo.",
+            JOptionPane.YES_NO_OPTION);
+
+        if (remove != JOptionPane.YES_OPTION) {
+            return;
+        }
+
+        mod.remove(selection);
+
+        archivoEnUso.getCamposDelArchivo().remove(selection);
+
+        if (archivoEnUso.getLlavePrincipal() > selection) {
+            archivoEnUso.setLlavePrincipal(archivoEnUso.getLlavePrincipal() - 1);
+        }
+
+        archivoEnUso.updateSecondaryKeys(selection);
+
+        DefaultTableModel model = (DefaultTableModel) jTable_Display.getModel();
+        String dataAux[] = new String[archivoEnUso.getCamposDelArchivo().size()];
+        for (int i = 0; i < archivoEnUso.getCamposDelArchivo().size(); i++) {
+            dataAux[i] = archivoEnUso.getCamposDelArchivo().get(i).getNombreCampo().substring(0, 25);
+        }
+        model.setColumnIdentifiers(dataAux);
+        JOptionPane.showMessageDialog(lista_de_campos, "Campo eliminado con éxito.",
+            "REALIZADO", JOptionPane.INFORMATION_MESSAGE);
+
+        saved = false;
+    }//GEN-LAST:event_jButton_eliminarActionPerformed
+
+    private void jButton_hacerPrincipalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_hacerPrincipalActionPerformed
+        int selection = jList_campos.getSelectedIndex();
+
+        // No hay nada seleccionado
+        if (selection == -1) {
+            JOptionPane.showMessageDialog(lista_de_campos, "Debe seleccionar un campo.");
+            return;
+        }
+
+        archivoEnUso.setLlavePrincipal(selection);
+        jLabelLlavePrincipal.setText("Llave principal: " + jList_campos.getModel().getElementAt(selection));
+
+        saved = false;
+    }//GEN-LAST:event_jButton_hacerPrincipalActionPerformed
+
+    private void jb_modificarCampoAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_modificarCampoAceptarActionPerformed
+        try {
+
+            int seleccion = jList_campos.getSelectedIndex();
+
+            DefaultListModel mod = (DefaultListModel) jList_campos.getModel();
+
+            String viejo = jtf_actualCampo.getText();
+            String nuevoNombre = jtf_nuevoCampo.getText();
+
+            if (nuevoNombre == null || nuevoNombre.equals(viejo)) {
+                return;
+            }
+
+            nuevoNombre = nuevoNombre.strip();
+
+            if (nuevoNombre.equals("")) {
+                return;
+            } else if (nuevoNombre.length() > 25) {
+                JOptionPane.showMessageDialog(ModificarCampo, "El nuevo nombre del campo no debe "
+                    + "sobrepasar los 25 caracteres.", "Nombre demasiado largo.", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            nuevoNombre = nuevoNombre.toUpperCase();
+
+            int largo = nuevoNombre.length();
+            while (nuevoNombre.length() < 25) {
+                nuevoNombre += " ";
+            }
+
+            for (int i = 0; i < archivoEnUso.getCamposDelArchivo().size(); i++) {
+                if (nuevoNombre.equalsIgnoreCase(archivoEnUso.getCamposDelArchivo().get(i).getNombreCampo().substring(0, 25))) {
+                    JOptionPane.showMessageDialog(lista_de_campos, "El campo ingresado ya existe.", "No se"
+                        + " puede modificar el campo", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+            }
+
+            //Cambiamos el campo en la JList
+            mod.setElementAt(nuevoNombre, seleccion);
+            jList_campos.setModel(mod);
+
+            //Obtenemos el campo del ArchivoDeRegistro
+            Campo campo = archivoEnUso.getCamposDelArchivo().get(seleccion);
+            String nombreViejo = campo.getNombreCampo();
+
+            if (nombreViejo.endsWith("int")) {
+                nuevoNombre += "_int";
+            } else if (nombreViejo.endsWith("dec")) {
+                nuevoNombre += "_dec";
+            } else if (nombreViejo.endsWith("car")) {
+                nuevoNombre += "_car";
+            } else {
+                nuevoNombre += "_str";
+            }
+
+            //Cambiamos el campo en el ArchivoDeRegistro
+            campo.setNombreCampo(nuevoNombre);
+
+            JOptionPane.showMessageDialog(lista_de_campos, "Campo modificado con exito",
+                "REALIZADO", JOptionPane.INFORMATION_MESSAGE);
+
+            // Modificamos el campo en la tabla.
+            DefaultTableModel model = (DefaultTableModel) jTable_Display.getModel();
+            String dataAux[] = new String[archivoEnUso.getCamposDelArchivo().size()];
+            for (int i = 0; i < dataAux.length; i++) {
+                if (i == seleccion) {
+                    dataAux[i] = nuevoNombre.substring(0, largo);
+                } else {
+                    dataAux[i] = model.getColumnName(i);
+                }
+            }
+            saved = false;
+
+            ModificarCampo.setVisible(false);
+
+        } catch (Exception e) {
+        }
+    }//GEN-LAST:event_jb_modificarCampoAceptarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -470,25 +960,65 @@ public class Main extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem AbrirFile;
+    private javax.swing.JMenu Archivos;
+    private javax.swing.JMenu Campos;
     private javax.swing.JMenuItem CerrarFile;
+    private javax.swing.JButton CrearCampo;
     private javax.swing.JLabel FONDO;
+    private javax.swing.ButtonGroup GrupoTipoDeDato;
     private javax.swing.JMenuItem GuardarFile;
+    private javax.swing.ButtonGroup LlavePrincipal_Secundaria;
+    private javax.swing.JDialog ModificarCampo;
     private javax.swing.JMenuItem NuevoFile;
+    private javax.swing.JMenu Registros;
     private javax.swing.JButton Salida;
     private javax.swing.JButton jButton1;
-    private javax.swing.JLabel jLabelLlvePrincipal;
+    private javax.swing.JButton jButton_agregar;
+    private javax.swing.JButton jButton_eliminar;
+    private javax.swing.JButton jButton_hacerPrincipal;
+    private javax.swing.JButton jButton_modificar;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabelLlavePrincipal;
+    private javax.swing.JLabel jLabel_BG_campos;
+    private javax.swing.JLabel jLabel_Title_Campos;
     private javax.swing.JLabel jLabel_nombreArchivo;
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenu jMenu3;
+    private javax.swing.JList<String> jList_campos;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem_listarCampos;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTable jTable_Display;
     private javax.swing.JButton jb_anterior;
     private javax.swing.JButton jb_final;
     private javax.swing.JButton jb_inicio;
+    private javax.swing.JButton jb_modificarCampoAceptar;
     private javax.swing.JButton jb_siguiente;
+    private javax.swing.JLabel jl_mod_BG1;
+    private javax.swing.JProgressBar jpb_porcentaje;
+    private javax.swing.JSpinner js_tamanioCadena;
+    private javax.swing.JTextField jtf_actualCampo;
+    private javax.swing.JTextField jtf_nuevoCampo;
+    private javax.swing.JLabel labelFondo;
+    private javax.swing.JDialog lista_de_campos;
+    private javax.swing.JDialog pantalla_Crear_Campos;
+    private javax.swing.JRadioButton rb_LlavePrincipal;
+    private javax.swing.JRadioButton rb_LlaveSecundaria;
+    private javax.swing.JRadioButton rb_campoNormal;
+    private javax.swing.JTextField tf_NombreCampo;
+    private javax.swing.JRadioButton tipoChar;
+    private javax.swing.JRadioButton tipoDecimal;
+    private javax.swing.JRadioButton tipoEntero;
+    private javax.swing.JRadioButton tipoString;
     // End of variables declaration//GEN-END:variables
 
     private boolean verifyOpen() {
@@ -550,7 +1080,6 @@ public class Main extends javax.swing.JFrame {
         archivoCargado = file;
         archivoIndices = fileIndices;
         archivoEnUso = new ArchivoDeRegistro(archivoCargado, archivoIndices);
-
         jLabel_nombreArchivo.setText("Current file: " + archivoCargado.getName());
         jTable_Display.setModel(new DefaultTableModel() {
             @Override
@@ -560,30 +1089,26 @@ public class Main extends javax.swing.JFrame {
         });
         DefaultListModel list_model = new DefaultListModel();
         DefaultTableModel model = (DefaultTableModel) jTable_Display.getModel();
-
         try (RandomAccessFile raf = new RandomAccessFile(archivoCargado, "r")) {
             for (int i = 0; i < archivoEnUso.getCamposDelArchivo().size(); i++) {//Para cargar los registros en memoria una vez se abre el archivo
                 String aux = archivoEnUso.getCamposDelArchivo().get(i).getNombreCampo();
                 aux = aux.substring(0, 25).strip();
-
                 list_model.addElement(aux);
-
                 String valoresColumna[] = new String[20];
-
                 model.addColumn(aux, valoresColumna);
             }
 
             if (archivoEnUso.getLlavePrincipal() == -1) {
-                jLabelLlvePrincipal.setText("Llave Principal: No se ha seleccionado una llave principal");
+                jLabelLlavePrincipal.setText("Llave Principal: No se ha seleccionado una llave principal");
             } else {
                 String llavePrincipal = archivoEnUso.getCamposDelArchivo().get(archivoEnUso.getLlavePrincipal()).getNombreCampo().substring(0, 25).strip();
-                jLabelLlvePrincipal.setText("Llave Principal: " + llavePrincipal);
+                jLabelLlavePrincipal.setText("Llave Principal: " + llavePrincipal);
             }
 
             if (archivoEnUso.getLlavePrincipal() != -1) {
                 tieneLlavePrincipal = true;
             }
-            /*
+            
             if (archivoEnUso.getNoRegistros() == 0) {
                 jButton_agregar.setEnabled(true);
                 jButton_modificar.setEnabled(true);
@@ -595,7 +1120,7 @@ public class Main extends javax.swing.JFrame {
                 jButton_eliminar.setEnabled(false);
                 jButton_hacerPrincipal.setEnabled(false);
             }
-             */
+             
         } catch (FileNotFoundException e) {
         } catch (IOException e) {
         }
@@ -603,8 +1128,7 @@ public class Main extends javax.swing.JFrame {
 
     public void clearDisplay(boolean newTableModel) {
         //Reset progressbar
-        //jpb_porcentaje.setValue(0);
-
+        jpb_porcentaje.setValue(0);
         //Reset table
         if (newTableModel) {
             jTable_Display.setModel(new DefaultTableModel() {
@@ -616,22 +1140,17 @@ public class Main extends javax.swing.JFrame {
         } else {
             String[][] data = new String[20][archivoEnUso.getCamposDelArchivo().size()];
             DefaultTableModel m = (DefaultTableModel) jTable_Display.getModel();
-
             String[] columns = new String[data[0].length];
             for (int i = 0; i < columns.length; i++) {
                 columns[i] = m.getColumnName(i);
             }
-
             m.setDataVector(data, columns);
         }
-
         //Reset navigation buttons
         jb_siguiente.setEnabled(false);
         jb_final.setEnabled(false);
-
         jb_anterior.setEnabled(false);
         jb_inicio.setEnabled(false);
-
         //Reset helper variables
         currentPosList = -1;
         currentRegList = -1;
@@ -715,7 +1234,7 @@ public class Main extends javax.swing.JFrame {
         }
 
         m.setDataVector(data, columns);
-        //jpb_porcentaje.setValue(currentRegList);
+        jpb_porcentaje.setValue(currentRegList);
     }
 
     private boolean saved = true;
