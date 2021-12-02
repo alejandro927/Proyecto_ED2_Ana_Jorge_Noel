@@ -530,7 +530,6 @@ public class Main extends javax.swing.JFrame {
                 CerrarFileActionPerformed(evt); //Al correr el programa y abrir el primer archivo hace una corrida de esta linea, la cual no deberia pasar
                 // porque por default no hay archivo cargado
             }
-
             nuevo = false;
             JFileChooser jfc = new JFileChooser("./Files"); //donde deseamos que aparezca
             //crear los filtros
@@ -1085,15 +1084,21 @@ public class Main extends javax.swing.JFrame {
         archivoCargado = file;
         archivoIndices = fileIndices;
         archivoEnUso = new ArchivoDeRegistro(archivoCargado, archivoIndices);
-
         jLabel_nombreArchivo.setText("Archivo Actual: " + archivoCargado.getName());
         jTable_Display.setModel(new DefaultTableModel() {
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return false;
             }
         });
+        jList_campos.setModel(new DefaultListModel() {
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return false;
+            }
+        });
         DefaultListModel list_model = new DefaultListModel();
         DefaultTableModel model = (DefaultTableModel) jTable_Display.getModel();
+        DefaultListModel list_model2 = new DefaultListModel();
+        DefaultListModel model2 = (DefaultListModel) jList_campos.getModel();
 
         try ( RandomAccessFile raf = new RandomAccessFile(archivoCargado, "r")) {
 //            String[] dataColumn = new String[archivoEnUso.getCamposDelArchivo().size()];
@@ -1102,6 +1107,8 @@ public class Main extends javax.swing.JFrame {
                 aux = aux.substring(0, 25).strip();
 
                 list_model.addElement(aux);
+                //list_model2.addElement(aux);
+                model2.addElement(aux);
 
                 String valoresColumna[] = new String[20];
                 model.addColumn(aux, valoresColumna);
@@ -1171,7 +1178,7 @@ public class Main extends javax.swing.JFrame {
 
     }
 
-        private void listAfter() {
+    private void listAfter() {
         DefaultTableModel m = (DefaultTableModel) jTable_Display.getModel();
         String[][] data = new String[20][archivoEnUso.getCamposDelArchivo().size()];
         try ( RandomAccessFile raf = new RandomAccessFile(archivoCargado, "r")) {
