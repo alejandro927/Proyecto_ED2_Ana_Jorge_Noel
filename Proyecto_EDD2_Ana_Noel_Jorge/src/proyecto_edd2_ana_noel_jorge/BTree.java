@@ -46,9 +46,6 @@ public class BTree<K extends Comparable, V> implements Serializable {
 
     }
     
-    
-    
-    
     public static class Node<K extends Comparable, V> implements Serializable{
         
         private static final long serialVersionUID = 777L;
@@ -97,44 +94,35 @@ public class BTree<K extends Comparable, V> implements Serializable {
         }
 
         public void split(Node<K, V> parent, int index) {
-
             // minimum # of keys = (degree - 1)/2
             // maximum # of keys = degree - 1
             if (this.numEntries() < 2 * t - 1) {
                 return;
             }
-
             Node<K, V> z = new Node<>(t);
-
             // Adding half of the leaves to the newly allocated node
             for (int j = 0; j < t - 1; j++) {
                 z.entries.add(this.getEntry(t + j));     //Already in order
             }
-
             // Removing the same keys from this node
             for (int j = 0; j < t - 1; j++) {
                 this.entries.remove(this.entries.size() - 1);       // Remove the last key each time
             }
-
             // Adding the corresponding children to the new node
             if (!this.isLeaf()) {
                 for (int j = 0; j < t; j++) {
                     z.children.add(this.children.get(t + j));     //Already in order
                 }
-
                 for (int j = 0; j < t; j++) {
                     this.children.remove(this.children.size() - 1);     // Remove the last node each time
                 }
             }
-
             // Adding the new node to the list of children of the parent
             // It is added after the index of this node
             // It automatically shifts all other nodes
             parent.children.add(index + 1, z);
-
             // Adding the middle key to the list of keys of the parent
             parent.entries.add(index, this.getEntry(this.entries.size() - 1));
-
             // Removing the key that was promoted
             this.entries.remove(this.entries.size() - 1);
 

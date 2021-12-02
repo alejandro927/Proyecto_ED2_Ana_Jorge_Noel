@@ -18,6 +18,11 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.TransformerFactory;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
 /**
  * @authors 
@@ -30,7 +35,6 @@ public class Main extends javax.swing.JFrame {
     public Main() {
         initComponents();
         this.setLocationRelativeTo(null);
-        //this.setExtendedState(MAXIMIZED_BOTH);
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -435,9 +439,11 @@ public class Main extends javax.swing.JFrame {
                     String indexFileName = path;
                     File archivoIndicesAux = new File(indexFileName + ".index");
                     fs = new FileOutputStream(archivoIndicesAux);
-                    try (ObjectOutputStream os = new ObjectOutputStream(fs)) {
-                        os.flush();
-                    }
+                    ObjectOutputStream os = new ObjectOutputStream(fs);
+                    BTree<Campo, Integer> indices = new BTree<>(3);
+                    os.writeObject(indices);
+                    os.flush();
+                    os.close();
                     archivoIndices = archivoIndicesAux;
                 } catch (FileNotFoundException ex) {
                 } catch (IOException ex) {
@@ -458,9 +464,8 @@ public class Main extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Archivo creado exitosamente.");
             archivoCargado = fichero;
             archivoEnUso = new ArchivoDeRegistro(archivoCargado, archivoIndices);
-            jLabel_nombreArchivo.setText("Archivo Actual: " + archivoCargado.getName());
+            jLabel_nombreArchivo.setText("Nombre Archivo: " + archivoCargado.getName());
             jTable_Display.setModel(new DefaultTableModel() {
-                @Override
                 public boolean isCellEditable(int rowIndex, int columnIndex) {
                     return false;
                 }
@@ -471,7 +476,6 @@ public class Main extends javax.swing.JFrame {
             jButton_modificar.setEnabled(true);
             jButton_eliminar.setEnabled(true);
             jButton_hacerPrincipal.setEnabled(true);
-             
         }
     }//GEN-LAST:event_NuevoFileActionPerformed
 
@@ -486,10 +490,13 @@ public class Main extends javax.swing.JFrame {
             }
             saved = true;
         }
-        jLabel_nombreArchivo.setText("Nombre del Archivo:");
+        jLabel_nombreArchivo.setText("Current File:");
         archivoCargado = null;
+
         clearDisplay(true);
+
         jLabelLlavePrincipal.setText("Llave principal: ");
+
         jb_inicio.setEnabled(false);
         jb_final.setEnabled(false);
         jb_anterior.setEnabled(false);
@@ -513,7 +520,7 @@ public class Main extends javax.swing.JFrame {
                     + "correctamente", "EXITO", JOptionPane.INFORMATION_MESSAGE);
             saved = true;
         } catch (IOException ex) {
-        }        
+        }       
     }//GEN-LAST:event_GuardarFileActionPerformed
 
     private void AbrirFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AbrirFileActionPerformed
@@ -525,14 +532,14 @@ public class Main extends javax.swing.JFrame {
             }
 
             nuevo = false;
-            JFileChooser archivo = new JFileChooser("./Files"); //donde deseamos que aparezca
+            JFileChooser jfc = new JFileChooser("./Files"); //donde deseamos que aparezca
             //crear los filtros
-            FileNameExtensionFilter filtro = new FileNameExtensionFilter("Archivos de registro ANJ", "ANJ");
+            FileNameExtensionFilter filtro = new FileNameExtensionFilter("Archivos de Registro X", "ANJ");
             //setear los filtros
-            archivo.setFileFilter(filtro);//forma 1: marcado como seleccionado
-            int seleccion = archivo.showOpenDialog(this);
-            if (seleccion == JFileChooser.APPROVE_OPTION && archivo.getSelectedFile().isFile()) {
-                File archiAuxNoSeCual = archivo.getSelectedFile();
+            jfc.setFileFilter(filtro);//forma 1: marcado como seleccionado
+            int seleccion = jfc.showOpenDialog(this);
+            if (seleccion == JFileChooser.APPROVE_OPTION && jfc.getSelectedFile().isFile()) {
+                File archiAuxNoSeCual = jfc.getSelectedFile();
                 String pathParaCargar = archiAuxNoSeCual.getPath();
                 if (pathParaCargar.endsWith(".ANJ")) {
                     pathParaCargar = pathParaCargar.substring(0, pathParaCargar.length() - 6);
@@ -542,7 +549,7 @@ public class Main extends javax.swing.JFrame {
                 File archivoIndicesACargar = new File(pathParaCargar);
                 loadFile(archiAuxNoSeCual, archivoIndicesACargar);
             }
-        } catch (HeadlessException e) {
+        } catch (Exception e) {
         }
     }//GEN-LAST:event_AbrirFileActionPerformed
 
@@ -1031,8 +1038,6 @@ public class Main extends javax.swing.JFrame {
         return true;
     }
     
-    
-    
     public void InsertMetadataInNewFile(File archivo) {
         try {
             new FileWriter(archivo, false).close();
@@ -1080,20 +1085,24 @@ public class Main extends javax.swing.JFrame {
         archivoCargado = file;
         archivoIndices = fileIndices;
         archivoEnUso = new ArchivoDeRegistro(archivoCargado, archivoIndices);
-        jLabel_nombreArchivo.setText("Current file: " + archivoCargado.getName());
+
+        jLabel_nombreArchivo.setText("Archivo Actual: " + archivoCargado.getName());
         jTable_Display.setModel(new DefaultTableModel() {
-            @Override
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return false;
             }
         });
         DefaultListModel list_model = new DefaultListModel();
         DefaultTableModel model = (DefaultTableModel) jTable_Display.getModel();
-        try (RandomAccessFile raf = new RandomAccessFile(archivoCargado, "r")) {
+
+        try ( RandomAccessFile raf = new RandomAccessFile(archivoCargado, "r")) {
+//            String[] dataColumn = new String[archivoEnUso.getCamposDelArchivo().size()];
             for (int i = 0; i < archivoEnUso.getCamposDelArchivo().size(); i++) {//Para cargar los registros en memoria una vez se abre el archivo
                 String aux = archivoEnUso.getCamposDelArchivo().get(i).getNombreCampo();
                 aux = aux.substring(0, 25).strip();
+
                 list_model.addElement(aux);
+
                 String valoresColumna[] = new String[20];
                 model.addColumn(aux, valoresColumna);
             }
@@ -1108,7 +1117,7 @@ public class Main extends javax.swing.JFrame {
             if (archivoEnUso.getLlavePrincipal() != -1) {
                 tieneLlavePrincipal = true;
             }
-            
+
             if (archivoEnUso.getNoRegistros() == 0) {
                 jButton_agregar.setEnabled(true);
                 jButton_modificar.setEnabled(true);
@@ -1120,7 +1129,7 @@ public class Main extends javax.swing.JFrame {
                 jButton_eliminar.setEnabled(false);
                 jButton_hacerPrincipal.setEnabled(false);
             }
-             
+
         } catch (FileNotFoundException e) {
         } catch (IOException e) {
         }
@@ -1129,10 +1138,10 @@ public class Main extends javax.swing.JFrame {
     public void clearDisplay(boolean newTableModel) {
         //Reset progressbar
         jpb_porcentaje.setValue(0);
+
         //Reset table
         if (newTableModel) {
             jTable_Display.setModel(new DefaultTableModel() {
-                @Override
                 public boolean isCellEditable(int rowIndex, int columnIndex) {
                     return false;
                 }
@@ -1140,32 +1149,33 @@ public class Main extends javax.swing.JFrame {
         } else {
             String[][] data = new String[20][archivoEnUso.getCamposDelArchivo().size()];
             DefaultTableModel m = (DefaultTableModel) jTable_Display.getModel();
+
             String[] columns = new String[data[0].length];
             for (int i = 0; i < columns.length; i++) {
                 columns[i] = m.getColumnName(i);
             }
+
             m.setDataVector(data, columns);
         }
+
         //Reset navigation buttons
         jb_siguiente.setEnabled(false);
         jb_final.setEnabled(false);
+
         jb_anterior.setEnabled(false);
         jb_inicio.setEnabled(false);
+
         //Reset helper variables
         currentPosList = -1;
         currentRegList = -1;
 
     }
 
-    private void listAfter() {
+        private void listAfter() {
         DefaultTableModel m = (DefaultTableModel) jTable_Display.getModel();
-
         String[][] data = new String[20][archivoEnUso.getCamposDelArchivo().size()];
-
-        try (RandomAccessFile raf = new RandomAccessFile(archivoCargado, "r")) {
-
+        try ( RandomAccessFile raf = new RandomAccessFile(archivoCargado, "r")) {
             byte[] types = new byte[data[0].length];
-
             for (int i = 0; i < types.length; i++) {
                 String nom = archivoEnUso.getCamposDelArchivo().get(i).getNombreCampo();
                 if (nom.endsWith("int")) {
@@ -1178,13 +1188,10 @@ public class Main extends javax.swing.JFrame {
                     types[i] = 4;
                 }
             }
-
             int largo = archivoEnUso.longitudRegistro();
             raf.seek(currentPosList);
-
             int row = 0;
             for (; currentRegList < archivoEnUso.getNoRegistros() && row < 20; currentRegList++) {
-
                 char mark = raf.readChar();
                 if (mark == '*') {
                     currentRegList--;
@@ -1192,9 +1199,7 @@ public class Main extends javax.swing.JFrame {
                     raf.seek(currentPosList);
                     continue;
                 }
-
                 for (int j = 0; j < data[0].length; j++) {
-
                     switch (types[j]) {
                         case 1: {
                             String val = String.valueOf(raf.readInt());
@@ -1237,13 +1242,23 @@ public class Main extends javax.swing.JFrame {
         jpb_porcentaje.setValue(currentRegList);
     }
 
-    private boolean saved = true;
     private File archivoCargado;
     private File archivoIndices;
-    private boolean nuevo = false;
-    private String path = "";
-    private ArchivoDeRegistro archivoEnUso;
+    private boolean saved = true; //Debe incicializarse en true porque por default no hay un archivo abierto. Al crear un archivo se hace false.
     private boolean tieneLlavePrincipal = false;
+    private ArchivoDeRegistro archivoEnUso;
+    private boolean nuevo = false;
+    private DocumentBuilderFactory docFactory = null;
+    private DocumentBuilder docBuilder = null;
+    private Document doc = null;
+    private Element rootElement = null;
+    private TransformerFactory transformerFactory = null;
+    private Registro registroCargado;
+    private int RRNCargado = -1;
+    private String path = "";
     private int currentPosList = -1;
     private int currentRegList = -1;
+    private ArchivoDeRegistro cruce1;
+    private ArchivoDeRegistro cruce2;
+    private boolean reindexar;
 }

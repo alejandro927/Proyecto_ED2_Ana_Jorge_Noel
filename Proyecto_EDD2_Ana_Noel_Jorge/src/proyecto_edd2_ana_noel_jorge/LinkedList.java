@@ -20,16 +20,18 @@ public class LinkedList<T> {
 
     /**
      * Busca y retorna el nodo en la posición indicada.
+     *
      * @param posicion posición del nodo en la lista
      * @return el nodo en la posición de la lista indicada
      */
-    
     private Nodo<T> obtenerNodo(int posicion) throws IndexOutOfBoundsException {
         // Verificar si la posición es válida
         if (posicion < 0 || posicion >= nElementos) {
             throw new IndexOutOfBoundsException("Element " + posicion + " in LinkedList size " + nElementos + " not found.");
         }
+
         Nodo<T> temp = null;
+
         if (nElementos - posicion < posicion) {
             temp = this.cabeza;
             for (int i = -1; i < posicion; i++) {
@@ -55,6 +57,7 @@ public class LinkedList<T> {
         if (posicion < 0 || posicion > nElementos) {
             return false;
         }
+
         if (posicion == 0) {
             insertarAlFrente(data);
         } else if (posicion == nElementos) {
@@ -64,6 +67,7 @@ public class LinkedList<T> {
             Nodo newest = new Nodo(data);
             insertarEntre(newest, next.getAnterior(), next);
         }
+
         return true;
     }
 
@@ -225,9 +229,4 @@ public class LinkedList<T> {
         n.setSiguiente(first);
         nElementos++;
     }
-    
-    
-    
-    
-    
 }
