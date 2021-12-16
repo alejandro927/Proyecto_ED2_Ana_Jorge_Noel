@@ -1,6 +1,5 @@
 package proyecto_edd2_ana_noel_jorge;
 
-import java.awt.HeadlessException;
 import java.io.EOFException;
 import java.io.File;
 import java.io.FileInputStream;
@@ -10,20 +9,23 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.RandomAccessFile;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
+import java.io.RandomAccessFile;
+import javax.swing.DefaultComboBoxModel;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -664,7 +666,7 @@ public class Main extends javax.swing.JFrame {
                 SalidaActionPerformed(evt);
             }
         });
-        getContentPane().add(Salida, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 380, 73, -1));
+        getContentPane().add(Salida, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 380, 73, -1));
 
         jLabel_nombreArchivo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel_nombreArchivo.setText("Archivo Actual:");
@@ -686,15 +688,15 @@ public class Main extends javax.swing.JFrame {
         getContentPane().add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 100, 609, 266));
 
         jPanel1.setBackground(new java.awt.Color(156, 111, 73));
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 160, 410));
-        getContentPane().add(jpb_porcentaje, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 70, 450, -1));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 110, 410));
+        getContentPane().add(jpb_porcentaje, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 80, 450, -1));
 
         jLabel5.setFont(new java.awt.Font("Dialog", 3, 20)); // NOI18N
         jLabel5.setText("EL ARCHIVERO");
         getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 10, 160, 50));
 
         FONDO.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGES/Principal Page.jpg"))); // NOI18N
-        getContentPane().add(FONDO, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, -10, 720, 420));
+        getContentPane().add(FONDO, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 0, 730, 410));
 
         Archivos.setText("Archivos");
 
@@ -819,6 +821,11 @@ public class Main extends javax.swing.JFrame {
         Menu_Exportar.add(ExportarExcel);
 
         Exportar_XML.setText("Exportar en XML con Schema");
+        Exportar_XML.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Exportar_XMLActionPerformed(evt);
+            }
+        });
         Menu_Exportar.add(Exportar_XML);
 
         jMenuBar1.add(Menu_Exportar);
@@ -837,7 +844,7 @@ public class Main extends javax.swing.JFrame {
         JFileChooser jfc = new JFileChooser("./Files");//instanciar
         nuevo = true;
         // y agregar una extension que filtre
-        FileNameExtensionFilter filtro = new FileNameExtensionFilter("Archivo de registro ANJ", "ANJ");
+        FileNameExtensionFilter filtro = new FileNameExtensionFilter("Archivo de registro ANJ", "xfile");
         jfc.setFileFilter(filtro);
         int seleccion = jfc.showSaveDialog(this); // muestre la ventana
         if (seleccion == JFileChooser.APPROVE_OPTION) {
@@ -845,11 +852,11 @@ public class Main extends javax.swing.JFrame {
 
             path = jfc.getSelectedFile().getPath();
 
-            if (!path.endsWith(".ANJ")) {
+            if (!path.endsWith(".xfile")) {
                 FileOutputStream fs = null;
                 try {
                     //si el filtro es archivo de texto
-                    fichero = new File(path + ".ANJ");//agarre el archivo y concatene la extension
+                    fichero = new File(path + ".xfile");//agarre el archivo y concatene la extension
                     String indexFileName = path;
                     File archivoIndicesAux = new File(indexFileName + ".index");
                     fs = new FileOutputStream(archivoIndicesAux);
@@ -878,7 +885,7 @@ public class Main extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Archivo creado exitosamente.");
             archivoCargado = fichero;
             archivoEnUso = new ArchivoDeRegistro(archivoCargado, archivoIndices);
-            jLabel_nombreArchivo.setText("Nombre Archivo: " + archivoCargado.getName());
+            jLabel_nombreArchivo.setText("Archivo actual: " + archivoCargado.getName());
             jTable_Display.setModel(new DefaultTableModel() {
                 public boolean isCellEditable(int rowIndex, int columnIndex) {
                     return false;
@@ -904,13 +911,11 @@ public class Main extends javax.swing.JFrame {
             }
             saved = true;
         }
-        jLabel_nombreArchivo.setText("Current File:");
+        jLabel_nombreArchivo.setText("Archivo actual:");
         archivoCargado = null;
-
+        limpiarLista();
         clearDisplay(true);
-
         jLabelLlavePrincipal.setText("Llave principal: ");
-
         jb_inicio.setEnabled(false);
         jb_final.setEnabled(false);
         jb_anterior.setEnabled(false);
@@ -944,17 +949,18 @@ public class Main extends javax.swing.JFrame {
                 CerrarFileActionPerformed(evt); //Al correr el programa y abrir el primer archivo hace una corrida de esta linea, la cual no deberia pasar
                 // porque por default no hay archivo cargado
             }
+
             nuevo = false;
             JFileChooser jfc = new JFileChooser("./Files"); //donde deseamos que aparezca
             //crear los filtros
-            FileNameExtensionFilter filtro = new FileNameExtensionFilter("Archivos de Registro X", "ANJ");
+            FileNameExtensionFilter filtro = new FileNameExtensionFilter("Archivos de Registro X", "xfile");
             //setear los filtros
             jfc.setFileFilter(filtro);//forma 1: marcado como seleccionado
             int seleccion = jfc.showOpenDialog(this);
             if (seleccion == JFileChooser.APPROVE_OPTION && jfc.getSelectedFile().isFile()) {
                 File archiAuxNoSeCual = jfc.getSelectedFile();
                 String pathParaCargar = archiAuxNoSeCual.getPath();
-                if (pathParaCargar.endsWith(".ANJ")) {
+                if (pathParaCargar.endsWith(".xfile")) {
                     pathParaCargar = pathParaCargar.substring(0, pathParaCargar.length() - 6);
                     pathParaCargar += ".index";
                 }
@@ -963,7 +969,7 @@ public class Main extends javax.swing.JFrame {
                 loadFile(archiAuxNoSeCual, archivoIndicesACargar);
             }
         } catch (Exception e) {
-        }
+        }     
     }//GEN-LAST:event_AbrirFileActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -1350,45 +1356,33 @@ public class Main extends javax.swing.JFrame {
         if (!verifyOpen()) {
             return;
         }
-
         GuardarFileActionPerformed(evt);
-
         if (archivoEnUso.getLlavePrincipal() == -1) {
             JOptionPane.showMessageDialog(this, "No se pueden buscar registros mientras no "
                     + "se haya seleccionado una llave principal.", "No hay llave principal.", JOptionPane.ERROR_MESSAGE);
             return;
         }
-
         if (archivoEnUso.getNoRegistros() == 0) {
             JOptionPane.showMessageDialog(this, "No se han insertado registros en el archivo.",
                     "No hay registros.", JOptionPane.INFORMATION_MESSAGE);
             return;
         }
-
         DefaultTableModel mod = (DefaultTableModel) jt_busqueda.getModel();
-
         Object[] columIden = {
             "Campos",
             "Valores"
         };
-
         Object[][] dataVector = new Object[archivoEnUso.getCamposDelArchivo().size()][2];
         for (int i = 0; i < dataVector.length; i++) {
             dataVector[i][0] = archivoEnUso.getCamposDelArchivo().get(i).getNombreCampo().substring(0, 25).strip();
             dataVector[i][1] = "";
-
         }
-
         // Añadimos los datos a la tabla
         mod.setDataVector(dataVector, columIden);
-
         jt_busqueda.setModel(mod);
-
         jb_eliminarRegistro.setEnabled(false);
         jb_modificarRegistro.setEnabled(false);
-
         jtf_buscar.setText("");
-
         jd_buscarRegistro.pack();
         jd_buscarRegistro.setModal(true);
         jd_buscarRegistro.setLocationRelativeTo(this);
@@ -1399,21 +1393,16 @@ public class Main extends javax.swing.JFrame {
         if (!verifyOpen()) {
             return;
         }
-
         if (archivoEnUso.getNoRegistros() == 0) {
             return;
         }
-
         if (archivoEnUso.getNoRegistros() > 20) {
             jb_siguiente.setEnabled(true);
             jb_final.setEnabled(true);
         }
-
         currentPosList = archivoEnUso.tamanioMetadata();
         currentRegList = 0;
-
         jpb_porcentaje.setMaximum(archivoEnUso.getNoRegistros());
-
         listAfter();
     }//GEN-LAST:event_listRegistrosActionPerformed
 
@@ -1428,7 +1417,7 @@ public class Main extends javax.swing.JFrame {
 
             JFileChooser jfc = new JFileChooser("./Files"); //donde deseamos que aparezca
             //crear los filtros
-            FileNameExtensionFilter filtro = new FileNameExtensionFilter("Archivos de Registro X", "xfile");
+            FileNameExtensionFilter filtro = new FileNameExtensionFilter("Archivos de Registro ANJ", "ANJ");
             //setear los filtros
             jfc.setFileFilter(filtro);//forma 1: marcado como seleccionado
             jfc.setDialogTitle("Primer archivo a cruzar");
@@ -1438,9 +1427,7 @@ public class Main extends javax.swing.JFrame {
                 return;
             }
             File fichero1 = jfc.getSelectedFile();
-
             Thread.sleep(1000);
-
             jfc.setDialogTitle("Segundo archivo a cruzar");
             seleccion = jfc.showOpenDialog(this);
             if (seleccion != JOptionPane.YES_OPTION) {
@@ -1454,8 +1441,8 @@ public class Main extends javax.swing.JFrame {
                 return;
             }
 
-            if (!fichero1.getPath().endsWith(".xfile") || !fichero2.getPath().endsWith(".xfile")) {
-                JOptionPane.showMessageDialog(this, "La operación fue cancelada. Los archivos deber de extension .xfile", "SALIR", JOptionPane.INFORMATION_MESSAGE);
+            if (!fichero1.getPath().endsWith(".ANJ") || !fichero2.getPath().endsWith(".ANJ")) {
+                JOptionPane.showMessageDialog(this, "La operación fue cancelada. Los archivos deber de extension .ANJ", "SALIR", JOptionPane.INFORMATION_MESSAGE);
                 return;
             }
 
@@ -1495,55 +1482,42 @@ public class Main extends javax.swing.JFrame {
         if (!verifyOpen()) {
             return;
         }
-
         GuardarFileActionPerformed(evt);
-
         if (archivoEnUso.getLlavePrincipal() == -1) {
             JOptionPane.showMessageDialog(this, "No se pueden buscar registros mientras no "
                     + "se haya seleccionado una llave principal.", "No hay llave principal.", JOptionPane.ERROR_MESSAGE);
             return;
         }
-
         if (archivoEnUso.getSecundarias().isEmpty()) {
             JOptionPane.showMessageDialog(this, "No hay llaves secundarias.", "Error.", JOptionPane.ERROR_MESSAGE);
             return;
         }
-
         if (archivoEnUso.getNoRegistros() == 0) {
             JOptionPane.showMessageDialog(this, "No se han insertado registros en el archivo.",
                     "No hay registros.", JOptionPane.INFORMATION_MESSAGE);
             return;
         }
-
         DefaultTableModel mod = (DefaultTableModel) jt_busquedaSec.getModel();
-
         Object[] columIden = {
             "Campos",
             "Valores"
         };
-
         DefaultComboBoxModel cb_m = new DefaultComboBoxModel();
-
         for (Integer secundaria : archivoEnUso.getSecundarias()) {
             cb_m.addElement(archivoEnUso.getCamposDelArchivo().get(secundaria).getNombreCampo().substring(0, 25).strip());
         }
-
         jcb_buscarSec.setModel(cb_m);
-
         Object[][] dataVector = new Object[archivoEnUso.getCamposDelArchivo().size()][2];
         for (int i = 0; i < dataVector.length; i++) {
             dataVector[i][0] = archivoEnUso.getCamposDelArchivo().get(i).getNombreCampo().substring(0, 25).strip();
             dataVector[i][1] = "";
-
         }
-
         // Añadimos los datos a la tabla
         mod.setDataVector(dataVector, columIden);
         jt_busquedaSec.setModel(mod);
         jtf_buscarSec.setText("");
         jb_eliminarRegistroSec.setEnabled(false);
         jb_modificarRegistroSec.setEnabled(false);
-
         jd_buscarSecundaria.pack();
         jd_buscarSecundaria.setModal(true);
         jd_buscarSecundaria.setLocationRelativeTo(this);
@@ -1557,6 +1531,7 @@ public class Main extends javax.swing.JFrame {
         }
 
         GuardarFileActionPerformed(evt);
+
         if (archivoEnUso.getLlavePrincipal() == -1) {
             JOptionPane.showMessageDialog(this, "No se puede insertar registros mientras no "
                     + "se haya seleccionado una llave principal.", "No hay llave principal.", JOptionPane.ERROR_MESSAGE);
@@ -1564,6 +1539,7 @@ public class Main extends javax.swing.JFrame {
         }
 
         DefaultTableModel mod = (DefaultTableModel) jt_campos.getModel();
+
         Object[] columIden = {
             "Campos",
             "Valores"
@@ -1592,16 +1568,11 @@ public class Main extends javax.swing.JFrame {
         if (jt_campos.getCellEditor() != null) {
             jt_campos.getCellEditor().stopCellEditing();
         }
-
         DefaultTableModel mod = (DefaultTableModel) jt_campos.getModel();
-
         Registro r = new Registro(mod.getRowCount());
-
         int lp = archivoEnUso.getLlavePrincipal();
-
         //Validar al implementar availlist
         int RRN;
-
         if (archivoEnUso.getAvailList().vacia()) {
             RRN = archivoEnUso.getNoRegistros();
         } else {
@@ -1611,7 +1582,6 @@ public class Main extends javax.swing.JFrame {
         for (int i = 0; i < mod.getRowCount(); i++) {
             String value = (String) (mod.getValueAt(i, 1) == null ? "" : mod.getValueAt(i, 1));
             String nomCampo = archivoEnUso.getCamposDelArchivo().get(i).getNombreCampo();
-
             try {
                 if (nomCampo.endsWith("int")) {
                     CampoEntero campo = new CampoEntero("");
@@ -1625,7 +1595,6 @@ public class Main extends javax.swing.JFrame {
                             return;
                         }
                     }
-
                     r.añadirCampo(campo);
                 } else if (nomCampo.endsWith("dec")) {
                     CampoDecimal campo = new CampoDecimal("");
@@ -1823,20 +1792,14 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jb_clearCargadoActionPerformed
 
     private void jb_modificarRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_modificarRegistroActionPerformed
-
         int row = jt_busqueda.getSelectedRow();
-
         if (row == -1) {
             return;
         }
-
         jt_busquedaSec.clearSelection();
-
         String valor = (String) jt_busqueda.getModel().getValueAt(row, 1);
-
         jtf_actual.setText(valor);
         jtf_nuevo.setText("");
-
         jd_modificarRegistro.pack();
         jd_modificarRegistro.setModal(true);
         jd_modificarRegistro.setLocationRelativeTo(jd_buscarRegistro);
@@ -1847,40 +1810,30 @@ public class Main extends javax.swing.JFrame {
         if (RRNCargado == -1 || registroCargado == null) {
             return;
         }
-
         try ( RandomAccessFile raf = new RandomAccessFile(archivoCargado, "rw")) {
-
             //Cambios en el archivo
             raf.seek(0);
             int cabeza = raf.readInt();
-
             raf.seek(archivoEnUso.tamanioMetadata() + (RRNCargado * archivoEnUso.longitudRegistro()));
             raf.writeChar('*');
-
             raf.writeInt(cabeza);
-
             raf.seek(0);
             raf.writeInt(RRNCargado);
-
             //Decrementar el número de registros
             int numReg = raf.readInt();
             raf.seek(4);
             numReg--;
             raf.writeInt(numReg);
-
             if (numReg == 0) {
                 jButton_agregar.setEnabled(true);
                 jButton_modificar.setEnabled(true);
                 jButton_eliminar.setEnabled(true);
                 jButton_hacerPrincipal.setEnabled(true);
             }
-
             //Decrementar en el archivo de registros
             archivoEnUso.setNoRegistros(archivoEnUso.getNoRegistros() - 1);
-
             //Insertar en el AvailList
             archivoEnUso.getAvailList().insertarAlFrente(RRNCargado);
-
             //Eliminar del arbol
             Campo campo = registroCargado.getCampos().get(archivoEnUso.getLlavePrincipal());
             if (archivoEnUso.getArbolIndices().remove(campo)) {
@@ -1892,32 +1845,25 @@ public class Main extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(jd_buscarRegistro, "Ocurrió un error al eliminar el registro del árbol.",
                         "Error", JOptionPane.ERROR_MESSAGE);
             }
-
             clearDisplay(false);
             jb_clearCargadoActionPerformed(evt);
-
         } catch (Exception e) {
             JOptionPane.showMessageDialog(jd_buscarRegistro, "Ocurrió un error al eliminar el registro.",
                     "Error", JOptionPane.ERROR_MESSAGE);
         }
-
     }//GEN-LAST:event_jb_eliminarRegistroActionPerformed
 
     private void jb_modificarRegistroAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_modificarRegistroAceptarActionPerformed
 
         int row = jt_busqueda.getSelectedRow() != -1 ? jt_busqueda.getSelectedRow() : jt_busquedaSec.getSelectedRow();
-
         String actual = jtf_actual.getText().strip();
         String nuevoValor = jtf_nuevo.getText().strip();
-
         if (actual.equals(nuevoValor) || nuevoValor.isEmpty()) {
             return;
         }
-
         Campo old = registroCargado.getCampos().get(row);
         Campo c;
         String nomCampo = archivoEnUso.getCamposDelArchivo().get(row).getNombreCampo();
-
         try {
             if (nomCampo.endsWith("int")) {
                 c = new CampoEntero();
@@ -1932,10 +1878,8 @@ public class Main extends javax.swing.JFrame {
                 ((CampoTexto) c).setLongitud(((CampoTexto) archivoEnUso.getCamposDelArchivo().get(row)).getLongitud());
                 ((CampoTexto) c).setTexto(nuevoValor);
             }
-
             if (row == archivoEnUso.getLlavePrincipal()) {
                 if (!archivoEnUso.getArbolIndices().insert(c, RRNCargado)) {
-
                     JOptionPane.showMessageDialog(jd_modificarRegistro, "Ya existe un registro con esta llave principal.",
                             "Error.", JOptionPane.ERROR_MESSAGE);
 
@@ -1945,64 +1889,46 @@ public class Main extends javax.swing.JFrame {
                     archivoEnUso.updateTree(archivoIndices);
                 }
             }
-
             registroCargado.getCampos().set(row, c);
-
             escribirRegistro(registroCargado, RRNCargado);
-
             JOptionPane.showMessageDialog(jd_modificarRegistro, "Registro modificado con éxito.",
                     "Éxito", JOptionPane.INFORMATION_MESSAGE);
-
             jt_busqueda.setValueAt(registroCargado.getCampos().get(row),
                     row, 1);
             jt_busquedaSec.setValueAt(registroCargado.getCampos().get(row),
                     row, 1);
-
             jd_modificarRegistro.setVisible(false);
-
             int target = currentRegList - (((currentRegList - 1) % 20) + 1);
-
             try ( RandomAccessFile raf = new RandomAccessFile(archivoCargado, "r")) {
-
                 int largo = archivoEnUso.longitudRegistro();
-
                 while (currentRegList > target) {
-
                     currentPosList -= largo;
                     raf.seek(currentPosList);
-
                     if (raf.readChar() != '*') {
                         currentRegList--;
                     }
                 }
-
                 listAfter();
-
             } catch (Exception e) {
             }
-
         } catch (NumberFormatException | IndexOutOfBoundsException e) {
             JOptionPane.showMessageDialog(jd_modificarRegistro, "El nuevo valor no es válido.",
                     "Error.", JOptionPane.ERROR_MESSAGE);
         }
-
     }//GEN-LAST:event_jb_modificarRegistroAceptarActionPerformed
 
     private void jb_cruzarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_cruzarActionPerformed
 
         int seleccion1 = jcb_cruce1.getSelectedIndex();
         int seleccion2 = jcb_cruce2.getSelectedIndex();
-
         if (seleccion1 == -1 || seleccion2 == -1) {
             return;
         }
-
         if (seleccion1 != cruce1.getLlavePrincipal() && seleccion2 != cruce2.getLlavePrincipal()) {
             JOptionPane.showMessageDialog(jd_cruce, "Una de las llaves debe ser llave principal.",
                     "No se puede cruzar", JOptionPane.ERROR_MESSAGE);
             return;
         }
-
         String nomCampo1 = cruce1.getCamposDelArchivo().get(seleccion1).getNombreCampo();
         String nomCampo2 = cruce2.getCamposDelArchivo().get(seleccion2).getNombreCampo();
 
@@ -2011,10 +1937,8 @@ public class Main extends javax.swing.JFrame {
                     "No se puede cruzar", JOptionPane.ERROR_MESSAGE);
             return;
         }
-
         ArchivoDeRegistro secuencial;
         ArchivoDeRegistro logaritmico;
-
         if (seleccion1 == cruce1.getLlavePrincipal() && seleccion2 == cruce2.getLlavePrincipal()) {
             if (cruce1.getNoRegistros() > cruce2.getNoRegistros()) {
                 secuencial = cruce2;
@@ -2037,7 +1961,6 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_jb_cruzarActionPerformed
 
     private void jb_crearIndiceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_crearIndiceActionPerformed
-
         if (reindexar) {
             reindexarCampo();
         } else {
@@ -2048,52 +1971,38 @@ public class Main extends javax.swing.JFrame {
     private void jb_buscarRegistroSecActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_buscarRegistroSecActionPerformed
 
         try {
-
             String valueToSearch = jtf_buscarSec.getText();
-
             if (valueToSearch == null || valueToSearch.isEmpty()) {
                 return;
             }
-
             int seleccion = jcb_buscarSec.getSelectedIndex();
-
             if (seleccion == -1) {
                 return;
             }
-
             int llave = archivoEnUso.getSecundarias().get(seleccion);
 
-            ////////////////////////////////
             String actName = archivoCargado.getName();
             String filePath = archivoCargado.getParent() + "\\" + actName.substring(0, actName.length() - 6)
                     + "\\" + archivoEnUso.getCamposDelArchivo()
                             .get(llave).getNombreCampo().substring(0, 25).strip() + ".index";
 
             File secTree = new File(filePath);
-
             if (!secTree.exists()) {
                 JOptionPane.showMessageDialog(jd_indices, "No se ha creado un índice con esa llave secundaria.",
                         "Error.", JOptionPane.ERROR_MESSAGE);
                 return;
             }
-
             BTree<Campo, Integer> tree;
-
             try ( FileInputStream fis = new FileInputStream(secTree);  ObjectInputStream ois = new ObjectInputStream(fis)) {
-
                 tree = (BTree<Campo, Integer>) ois.readObject();
-
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(jd_indices, "No se pudo cargar el árbol de la llave secundaria.",
                         "Error.", JOptionPane.ERROR_MESSAGE);
                 return;
             }
-
             String nombreCampo = archivoEnUso.getCamposDelArchivo()
                     .get(llave).getNombreCampo();
-
             Pair<BTree.Node<Campo, Integer>, Integer> pair;
-
             if (nombreCampo.endsWith("int")) {
                 Integer val = Integer.parseInt(valueToSearch);
                 CampoEntero campo = new CampoEntero();
@@ -2115,23 +2024,17 @@ public class Main extends javax.swing.JFrame {
                 campo.setTexto(valueToSearch);
                 pair = tree.search(campo);
             }
-
             if (pair == null) {
                 JOptionPane.showMessageDialog(jd_buscarRegistro, "No existe un registro con la llave especificada.",
                         "Búsqueda fallida.", JOptionPane.ERROR_MESSAGE);
                 return;
             }
-
             BTree.Node<Campo, Integer> nodo = pair.getPrimero();
             int indice = pair.getSegundo();
-
             BTree.Entry<Campo, Integer> entry = nodo.getEntry(indice);
             int RRN = entry.getValue();
-
             cargarRegistro(RRN);
-
             jb_eliminarRegistroSec.setEnabled(true);
-
         } catch (NumberFormatException | IndexOutOfBoundsException e) {
         }
     }//GEN-LAST:event_jb_buscarRegistroSecActionPerformed
@@ -2143,18 +2046,13 @@ public class Main extends javax.swing.JFrame {
     private void jb_modificarRegistroSecActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jb_modificarRegistroSecActionPerformed
 
         int row = jt_busquedaSec.getSelectedRow();
-
         if (row == -1) {
             return;
         }
-
         jt_busqueda.clearSelection();
-
         String valor = (String) jt_busquedaSec.getModel().getValueAt(row, 1);
-
         jtf_actual.setText(valor);
         jtf_nuevo.setText("");
-
         jd_modificarRegistro.pack();
         jd_modificarRegistro.setModal(true);
         jd_modificarRegistro.setLocationRelativeTo(jd_buscarRegistro);
@@ -2170,22 +2068,16 @@ public class Main extends javax.swing.JFrame {
         if (!verifyOpen()) {
             return;
         }
-
         DefaultComboBoxModel m = new DefaultComboBoxModel();
-
         for (Integer secundaria : archivoEnUso.getSecundarias()) {
             m.addElement(archivoEnUso.getCamposDelArchivo().get(secundaria).getNombreCampo().substring(0, 25).strip());
         }
-
         jcb_secundarias.setModel(m);
-
         jl_propositoIndice.setText("Seleccione un campo para indexar: ");
-
         jd_indices.pack();
         jd_indices.setModal(true);
         jd_indices.setLocationRelativeTo(this);
         jd_indices.setVisible(true);
-
         reindexar = false;
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
@@ -2194,22 +2086,16 @@ public class Main extends javax.swing.JFrame {
         if (!verifyOpen()) {
             return;
         }
-
         DefaultComboBoxModel m = new DefaultComboBoxModel();
-
         for (Integer secundaria : archivoEnUso.getSecundarias()) {
             m.addElement(archivoEnUso.getCamposDelArchivo().get(secundaria).getNombreCampo().substring(0, 25).strip());
         }
-
         jcb_secundarias.setModel(m);
-
         jl_propositoIndice.setText("Seleccione un campo para reindexar: ");
-
         jd_indices.pack();
         jd_indices.setModal(true);
         jd_indices.setLocationRelativeTo(this);
         jd_indices.setVisible(true);
-
         reindexar = true;
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
@@ -2218,10 +2104,87 @@ public class Main extends javax.swing.JFrame {
         if (!verifyOpen()) {
             return;
         }
-
         Excel ef = new Excel(archivoCargado, archivoEnUso, this);
         ef.exportExcel();
     }//GEN-LAST:event_ExportarExcelActionPerformed
+
+    private void Exportar_XMLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Exportar_XMLActionPerformed
+        // TODO add your handling code here:
+        if (!verifyOpen()) {
+            return;
+        }
+        JFileChooser jfc = new JFileChooser("./Files");
+        // Agregar una extension que filtre
+        FileNameExtensionFilter filtro = new FileNameExtensionFilter("Documento XML",
+                "xml");
+        jfc.setFileFilter(filtro);
+        File fichero;
+        int seleccion = jfc.showSaveDialog(this); // muestre la ventana
+        if (seleccion == JFileChooser.APPROVE_OPTION) {
+            fichero = jfc.getSelectedFile();
+        } else {
+            JOptionPane.showMessageDialog(this, "No se pudo exportar el archivo.",
+                    "Exportación cancelada.", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        try ( RandomAccessFile raf = new RandomAccessFile(archivoCargado, "r")) {
+            docFactory = DocumentBuilderFactory.newInstance();
+            docBuilder = docFactory.newDocumentBuilder();
+            //Elemento raíz
+            doc = docBuilder.newDocument();
+            rootElement = doc.createElement(fichero.getName());
+            doc.appendChild(rootElement);
+            raf.seek(archivoEnUso.tamanioMetadata());
+            int largo = archivoEnUso.longitudRegistro();
+            for (int i = 0; i < archivoEnUso.getNoRegistros(); i++) {
+                char mark = raf.readChar();
+                if (mark == '*') {
+                    i--;
+                    raf.seek(raf.getFilePointer() + largo - 2);
+                    continue;
+                }
+                Element registro = doc.createElement("registro");
+                rootElement.appendChild(registro);
+                for (int j = 0; j < archivoEnUso.getCamposDelArchivo().size(); j++) {
+                    String nomCampo = archivoEnUso.getCamposDelArchivo().get(j).getNombreCampo();
+                    String value;
+                    String identifier = nomCampo.substring(0, 25);
+                    identifier = identifier.strip().replaceAll(" ", "_");
+                    Attr attr = doc.createAttribute(identifier);
+                    if (nomCampo.endsWith("_int")) {
+                        int v = raf.readInt();
+                        value = String.valueOf(v);
+                        attr.setValue(value);
+                        registro.setAttributeNode(attr);
+                    } else if (nomCampo.endsWith("_dec")) {
+                        double v = raf.readDouble();
+                        value = String.valueOf(v);
+                        attr.setValue(value);
+                        registro.setAttributeNode(attr);
+                    } else if (nomCampo.endsWith("_car")) {
+                        char v = raf.readChar();
+                        value = String.valueOf(v);
+                        attr.setValue(value);
+                        registro.setAttributeNode(attr);
+                    } else if (nomCampo.endsWith("_str")) {
+                        value = raf.readUTF();
+                        attr.setValue(value.strip());
+                        registro.setAttributeNode(attr);
+                    }
+                }
+                raf.readChar();
+            }
+            transformerFactory = TransformerFactory.newInstance();
+            Transformer transformer = transformerFactory.newTransformer();
+            DOMSource source = new DOMSource(doc);
+            StreamResult result = new StreamResult(new File(fichero.getPath() + ".xml"));
+            transformer.transform(source, result);
+        } catch (Exception e) {
+        } finally {
+            JOptionPane.showMessageDialog(jd_nuevoRegistro, "Archivo exportado correctamente.",
+                    "EXITO", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }//GEN-LAST:event_Exportar_XMLActionPerformed
 
     /**
      * @param args the command line arguments
@@ -2384,18 +2347,14 @@ public class Main extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private void escribirRegistro(Registro r, int RRN) {
-
         int offsetInicial = archivoEnUso.tamanioMetadata();
         int longitudRegistro = archivoEnUso.longitudRegistro();
-
         try ( RandomAccessFile raf = new RandomAccessFile(archivoCargado, "rw")) {
 
             raf.seek(offsetInicial + (RRN * longitudRegistro));
             raf.writeChar('-');
-
             for (int i = 0; i < archivoEnUso.getCamposDelArchivo().size(); i++) {
                 Campo c = r.getCampos().get(i);
-
                 if (c instanceof CampoEntero) {
                     CampoEntero campo = (CampoEntero) c;
                     raf.writeInt(campo.getValor());
@@ -2409,18 +2368,14 @@ public class Main extends javax.swing.JFrame {
                     CampoTexto campo = (CampoTexto) c;
                     raf.writeUTF(campo.getTexto());
                 }
-
             }
-
             raf.writeChar('\n');
-
             if (archivoEnUso.getNoRegistros() != 0) {
                 jButton_agregar.setEnabled(false);
                 jButton_modificar.setEnabled(false);
                 jButton_eliminar.setEnabled(false);
                 jButton_hacerPrincipal.setEnabled(false);
             }
-
             int cabeza;
             if (archivoEnUso.getAvailList() == null || archivoEnUso.getAvailList().vacia()) {
                 cabeza = -1;
@@ -2428,19 +2383,15 @@ public class Main extends javax.swing.JFrame {
                 archivoEnUso.getAvailList().suprimir(0);
                 cabeza = archivoEnUso.getAvailList().obtener(0);
             }
-
             //Cambiamos la cabeza del availist
             raf.seek(0);
             raf.writeInt(cabeza);
-
             //Incrementamos la cantidad de registros en el archivo
             int numReg = raf.readInt();
             raf.seek(4);
             raf.writeInt(numReg + 1);
-
             //Incrementamos la cantidad de registros en el archivoEnUso
             archivoEnUso.setNoRegistros(archivoEnUso.getNoRegistros() + 1);
-
         } catch (Exception e) {
         }
     }
@@ -2460,9 +2411,7 @@ public class Main extends javax.swing.JFrame {
             new FileWriter(archivo, false).close();
         } catch (IOException ex) {
         }
-
         try ( RandomAccessFile raf = new RandomAccessFile(archivo, "rw")) {
-
             raf.writeInt(-1);//no es RRN, es cabeza del availist 
             raf.writeInt(0);//#registros    
             Date date = Calendar.getInstance().getTime();
@@ -2516,31 +2465,25 @@ public class Main extends javax.swing.JFrame {
         DefaultListModel list_model = new DefaultListModel();
         DefaultTableModel model = (DefaultTableModel) jTable_Display.getModel();
         DefaultListModel model2 = (DefaultListModel) jList_campos.getModel();
-
         try ( RandomAccessFile raf = new RandomAccessFile(archivoCargado, "r")) {
 //            String[] dataColumn = new String[archivoEnUso.getCamposDelArchivo().size()];
             for (int i = 0; i < archivoEnUso.getCamposDelArchivo().size(); i++) {//Para cargar los registros en memoria una vez se abre el archivo
                 String aux = archivoEnUso.getCamposDelArchivo().get(i).getNombreCampo();
                 aux = aux.substring(0, 25).strip();
-
                 list_model.addElement(aux);
                 model2.addElement(aux);
-
                 String valoresColumna[] = new String[20];
                 model.addColumn(aux, valoresColumna);
             }
-
             if (archivoEnUso.getLlavePrincipal() == -1) {
                 jLabelLlavePrincipal.setText("Llave Principal: No se ha seleccionado una llave principal");
             } else {
                 String llavePrincipal = archivoEnUso.getCamposDelArchivo().get(archivoEnUso.getLlavePrincipal()).getNombreCampo().substring(0, 25).strip();
                 jLabelLlavePrincipal.setText("Llave Principal: " + llavePrincipal);
             }
-
             if (archivoEnUso.getLlavePrincipal() != -1) {
                 tieneLlavePrincipal = true;
             }
-
             if (archivoEnUso.getNoRegistros() == 0) {
                 jButton_agregar.setEnabled(true);
                 jButton_modificar.setEnabled(true);
@@ -2552,16 +2495,20 @@ public class Main extends javax.swing.JFrame {
                 jButton_eliminar.setEnabled(false);
                 jButton_hacerPrincipal.setEnabled(false);
             }
-
         } catch (FileNotFoundException e) {
         } catch (IOException e) {
         }
     }
 
+    public DefaultListModel limpiarLista(){
+        DefaultListModel modelo = new DefaultListModel();
+        jList_campos.setModel(modelo);
+        return modelo;
+    }
+    
     public void clearDisplay(boolean newTableModel) {
         //Reset progressbar
         jpb_porcentaje.setValue(0);
-
         //Reset table
         if (newTableModel) {
             jTable_Display.setModel(new DefaultTableModel() {
@@ -2572,26 +2519,22 @@ public class Main extends javax.swing.JFrame {
         } else {
             String[][] data = new String[20][archivoEnUso.getCamposDelArchivo().size()];
             DefaultTableModel m = (DefaultTableModel) jTable_Display.getModel();
-
+            DefaultListModel n = (DefaultListModel) jList_campos.getModel();
+            //jList_campos
             String[] columns = new String[data[0].length];
             for (int i = 0; i < columns.length; i++) {
                 columns[i] = m.getColumnName(i);
             }
-
             m.setDataVector(data, columns);
         }
-
         //Reset navigation buttons
         jb_siguiente.setEnabled(false);
         jb_final.setEnabled(false);
-
         jb_anterior.setEnabled(false);
         jb_inicio.setEnabled(false);
-
         //Reset helper variables
         currentPosList = -1;
         currentRegList = -1;
-
     }
 
     private void listAfter() {
@@ -2650,17 +2593,14 @@ public class Main extends javax.swing.JFrame {
                 row++;
                 raf.readChar();
             }
-
         } catch (EOFException eof) {
         } catch (Exception e) {
             return;
         }
-
         String[] columns = new String[data[0].length];
         for (int i = 0; i < columns.length; i++) {
             columns[i] = m.getColumnName(i);
         }
-
         m.setDataVector(data, columns);
         jpb_porcentaje.setValue(currentRegList);
     }
@@ -2699,22 +2639,16 @@ public class Main extends javax.swing.JFrame {
     }
 
     private void cargarRegistro(int RRN) {
-
         if (RRN > archivoEnUso.getNoRegistros() - 1) {
             JOptionPane.showMessageDialog(this, "Error cargar registro");
             return;
         }
-
         int offsetInicial = archivoEnUso.tamanioMetadata();
         int longitudRegistro = archivoEnUso.longitudRegistro();
-
         try ( RandomAccessFile raf = new RandomAccessFile(archivoCargado, "rw")) {
             raf.seek(offsetInicial + (RRN * longitudRegistro));
-
             Registro r = new Registro(archivoEnUso.getCamposDelArchivo().size());
-
             raf.readChar();
-
             for (int i = 0; i < archivoEnUso.getCamposDelArchivo().size(); i++) {
                 String nomCampo = archivoEnUso.getCamposDelArchivo().get(i).getNombreCampo();
 
@@ -2739,17 +2673,10 @@ public class Main extends javax.swing.JFrame {
                     CampoCaracter campo = new CampoCaracter(val);
                     r.añadirCampo(campo);
                 }
-
             }
-
             registroCargado = r;
             RRNCargado = RRN;
-
             mostrarRegistro(r);
-
-//        } catch (FileNotFoundException e) {
-//        } catch (IOException ex) {
-//        }
         } catch (Exception e) {
         }
     }
@@ -2758,13 +2685,10 @@ public class Main extends javax.swing.JFrame {
 
         DefaultTableModel mod = (DefaultTableModel) jt_busqueda.getModel();
         DefaultTableModel modSec = (DefaultTableModel) jt_busquedaSec.getModel();
-
         for (int i = 0; i < r.getCampos().size(); i++) {
-
             Campo c = r.getCampos().get(i);
             String nomCampo = archivoEnUso.getCamposDelArchivo().get(i).getNombreCampo();
             String value;
-
             if (nomCampo.endsWith("_int")) {
                 int v = ((CampoEntero) c).getValor();
                 value = String.valueOf(v);
@@ -2777,7 +2701,6 @@ public class Main extends javax.swing.JFrame {
             } else {
                 value = ((CampoTexto) c).getTexto();
             }
-
             try {
                 mod.setValueAt(value, i, 1);
             } catch (ArrayIndexOutOfBoundsException e) {
@@ -2786,23 +2709,19 @@ public class Main extends javax.swing.JFrame {
                 modSec.setValueAt(value, i, 1);
             } catch (ArrayIndexOutOfBoundsException e) {
             }
-
         }
     }
 
     private void newFileCruce() {
-
         JFileChooser jfc = new JFileChooser("./Files");//instanciar
         nuevo = true;
         // y agregar una extension que filtre
-        FileNameExtensionFilter filtro = new FileNameExtensionFilter("Archivo de Registro X", "xfile");
+        FileNameExtensionFilter filtro = new FileNameExtensionFilter("Archivo de registro ANJ", "xfile");
         jfc.setFileFilter(filtro);
         int seleccion = jfc.showSaveDialog(this); // muestre la ventana
         if (seleccion == JFileChooser.APPROVE_OPTION) {
             File fichero = null;
-
             path = jfc.getSelectedFile().getPath();
-
             if (!path.endsWith(".xfile")) {
                 FileOutputStream fs = null;
                 try {
@@ -2826,7 +2745,6 @@ public class Main extends javax.swing.JFrame {
                     }
                 }
             } else {
-
                 JOptionPane.showMessageDialog(this, "El archivo ya existe.", "Error.",
                         JOptionPane.ERROR_MESSAGE);
                 nuevo = false;
@@ -2847,7 +2765,6 @@ public class Main extends javax.swing.JFrame {
             jButton_modificar.setEnabled(true);
             jButton_eliminar.setEnabled(true);
             jButton_hacerPrincipal.setEnabled(true);
-
         }
     }
 
@@ -3354,13 +3271,10 @@ public class Main extends javax.swing.JFrame {
         }
     }
     
-    
-    
-    
 
     private File archivoCargado;
     private File archivoIndices;
-    private boolean saved = true; //Debe incicializarse en true porque por default no hay un archivo abierto. Al crear un archivo se hace false.
+    private boolean saved = true;
     private boolean tieneLlavePrincipal = false;
     private ArchivoDeRegistro archivoEnUso;
     private boolean nuevo = false;
