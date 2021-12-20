@@ -65,6 +65,7 @@ public class Main extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         rb_campoNormal = new javax.swing.JRadioButton();
         labelFondo = new javax.swing.JLabel();
+        jLabel31 = new javax.swing.JLabel();
         lista_de_campos = new javax.swing.JDialog();
         jPanel4 = new javax.swing.JPanel();
         jLabel_Title_Campos = new javax.swing.JLabel();
@@ -75,6 +76,7 @@ public class Main extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         jList_campos = new javax.swing.JList<>();
         jLabel_BG_campos = new javax.swing.JLabel();
+        jLabel30 = new javax.swing.JLabel();
         GrupoTipoDeDato = new javax.swing.ButtonGroup();
         LlavePrincipal_Secundaria = new javax.swing.ButtonGroup();
         ModificarCampo = new javax.swing.JDialog();
@@ -86,13 +88,13 @@ public class Main extends javax.swing.JFrame {
         jtf_nuevoCampo = new javax.swing.JTextField();
         jb_modificarCampoAceptar = new javax.swing.JButton();
         jl_mod_BG1 = new javax.swing.JLabel();
-        jMenuItem1 = new javax.swing.JMenuItem();
         jd_nuevoRegistro = new javax.swing.JDialog();
         jScrollPane4 = new javax.swing.JScrollPane();
         jt_campos = new javax.swing.JTable();
         jb_crearRegistro = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
         jd_buscarRegistro = new javax.swing.JDialog();
         jScrollPane5 = new javax.swing.JScrollPane();
         jt_busqueda = new javax.swing.JTable();
@@ -104,6 +106,7 @@ public class Main extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
+        jLabel17 = new javax.swing.JLabel();
         jd_modificarRegistro = new javax.swing.JDialog();
         jPanel3 = new javax.swing.JPanel();
         jLabel22 = new javax.swing.JLabel();
@@ -113,6 +116,7 @@ public class Main extends javax.swing.JFrame {
         jtf_nuevo = new javax.swing.JTextField();
         jb_modificarRegistroAceptar = new javax.swing.JButton();
         jl_mod_BG = new javax.swing.JLabel();
+        jLabel18 = new javax.swing.JLabel();
         jd_cruce = new javax.swing.JDialog();
         jPanel6 = new javax.swing.JPanel();
         jLabel19 = new javax.swing.JLabel();
@@ -122,11 +126,13 @@ public class Main extends javax.swing.JFrame {
         jb_cruzar = new javax.swing.JButton();
         jpb_cruce = new javax.swing.JProgressBar();
         jLabel21 = new javax.swing.JLabel();
+        jLabel27 = new javax.swing.JLabel();
         jd_indices = new javax.swing.JDialog();
         jl_propositoIndice = new javax.swing.JLabel();
         jcb_secundarias = new javax.swing.JComboBox<>();
         jb_crearIndice = new javax.swing.JButton();
         jLabel23 = new javax.swing.JLabel();
+        jLabel28 = new javax.swing.JLabel();
         jd_buscarSecundaria = new javax.swing.JDialog();
         jScrollPane6 = new javax.swing.JScrollPane();
         jt_busquedaSec = new javax.swing.JTable();
@@ -139,6 +145,7 @@ public class Main extends javax.swing.JFrame {
         jLabel24 = new javax.swing.JLabel();
         jLabel25 = new javax.swing.JLabel();
         jLabel26 = new javax.swing.JLabel();
+        jLabel29 = new javax.swing.JLabel();
         jb_inicio = new javax.swing.JButton();
         jb_anterior = new javax.swing.JButton();
         jb_siguiente = new javax.swing.JButton();
@@ -178,7 +185,7 @@ public class Main extends javax.swing.JFrame {
 
         jLabel1.setText("Nombre del Campo:");
         pantalla_Crear_Campos.getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(33, 60, 132, -1));
-        pantalla_Crear_Campos.getContentPane().add(tf_NombreCampo, new org.netbeans.lib.awtextra.AbsoluteConstraints(197, 56, 162, -1));
+        pantalla_Crear_Campos.getContentPane().add(tf_NombreCampo, new org.netbeans.lib.awtextra.AbsoluteConstraints(197, 56, 162, 20));
 
         jLabel2.setText("Tipo De Dato del Campo:");
         pantalla_Crear_Campos.getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(33, 165, -1, -1));
@@ -186,11 +193,11 @@ public class Main extends javax.swing.JFrame {
         tipoEntero.setBackground(new java.awt.Color(142, 63, 65));
         GrupoTipoDeDato.add(tipoEntero);
         tipoEntero.setText("Entero");
-        pantalla_Crear_Campos.getContentPane().add(tipoEntero, new org.netbeans.lib.awtextra.AbsoluteConstraints(197, 109, 110, -1));
+        pantalla_Crear_Campos.getContentPane().add(tipoEntero, new org.netbeans.lib.awtextra.AbsoluteConstraints(197, 109, 120, -1));
 
         GrupoTipoDeDato.add(tipoDecimal);
         tipoDecimal.setText("Decimal");
-        pantalla_Crear_Campos.getContentPane().add(tipoDecimal, new org.netbeans.lib.awtextra.AbsoluteConstraints(197, 143, 110, -1));
+        pantalla_Crear_Campos.getContentPane().add(tipoDecimal, new org.netbeans.lib.awtextra.AbsoluteConstraints(197, 143, 120, -1));
 
         GrupoTipoDeDato.add(tipoString);
         tipoString.setSelected(true);
@@ -200,11 +207,11 @@ public class Main extends javax.swing.JFrame {
                 tipoStringStateChanged(evt);
             }
         });
-        pantalla_Crear_Campos.getContentPane().add(tipoString, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 180, -1, -1));
+        pantalla_Crear_Campos.getContentPane().add(tipoString, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 180, 120, -1));
 
         GrupoTipoDeDato.add(tipoChar);
         tipoChar.setText("Caracter");
-        pantalla_Crear_Campos.getContentPane().add(tipoChar, new org.netbeans.lib.awtextra.AbsoluteConstraints(197, 211, 110, -1));
+        pantalla_Crear_Campos.getContentPane().add(tipoChar, new org.netbeans.lib.awtextra.AbsoluteConstraints(197, 211, 120, -1));
 
         CrearCampo.setText("Aceptar");
         CrearCampo.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -212,7 +219,7 @@ public class Main extends javax.swing.JFrame {
                 CrearCampoMouseClicked(evt);
             }
         });
-        pantalla_Crear_Campos.getContentPane().add(CrearCampo, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 390, 102, -1));
+        pantalla_Crear_Campos.getContentPane().add(CrearCampo, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 390, 102, -1));
 
         jLabel3.setText("Tipo de Llave");
         pantalla_Crear_Campos.getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 280, 100, -1));
@@ -237,7 +244,10 @@ public class Main extends javax.swing.JFrame {
         pantalla_Crear_Campos.getContentPane().add(rb_campoNormal, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 340, -1, -1));
 
         labelFondo.setPreferredSize(new java.awt.Dimension(1587, 545));
-        pantalla_Crear_Campos.getContentPane().add(labelFondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 430, 450));
+        pantalla_Crear_Campos.getContentPane().add(labelFondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 470, 440));
+
+        jLabel31.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGES/Degradado_4.png"))); // NOI18N
+        pantalla_Crear_Campos.getContentPane().add(jLabel31, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 470, 440));
 
         lista_de_campos.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -306,7 +316,10 @@ public class Main extends javax.swing.JFrame {
         jScrollPane2.setViewportView(jList_campos);
 
         jPanel4.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 90, 197, 234));
-        jPanel4.add(jLabel_BG_campos, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 540, 390));
+        jPanel4.add(jLabel_BG_campos, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 620, 420));
+
+        jLabel30.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGES/Degradado_4.png"))); // NOI18N
+        jPanel4.add(jLabel30, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 610, 430));
 
         lista_de_campos.getContentPane().add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 390));
 
@@ -340,8 +353,6 @@ public class Main extends javax.swing.JFrame {
 
         ModificarCampo.getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 400, 300));
 
-        jMenuItem1.setText("jMenuItem1");
-
         jd_nuevoRegistro.setResizable(false);
         jd_nuevoRegistro.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -371,7 +382,7 @@ public class Main extends javax.swing.JFrame {
         jt_campos.setCellSelectionEnabled(true);
         jScrollPane4.setViewportView(jt_campos);
 
-        jd_nuevoRegistro.getContentPane().add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 90, 590, 290));
+        jd_nuevoRegistro.getContentPane().add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 90, 500, 250));
 
         jb_crearRegistro.setText("Aceptar");
         jb_crearRegistro.addActionListener(new java.awt.event.ActionListener() {
@@ -379,13 +390,18 @@ public class Main extends javax.swing.JFrame {
                 jb_crearRegistroActionPerformed(evt);
             }
         });
-        jd_nuevoRegistro.getContentPane().add(jb_crearRegistro, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 400, -1, -1));
+        jd_nuevoRegistro.getContentPane().add(jb_crearRegistro, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 370, -1, -1));
 
         jLabel6.setFont(new java.awt.Font("BankGothic Md BT", 3, 36)); // NOI18N
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel6.setText("Nuevo Registro");
-        jd_nuevoRegistro.getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 20, 370, -1));
-        jd_nuevoRegistro.getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 720, 450));
+        jd_nuevoRegistro.getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 20, 370, -1));
+
+        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGES/Degradado_4.png"))); // NOI18N
+        jd_nuevoRegistro.getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 640, 420));
+
+        jLabel16.setText("jLabel16");
+        jd_nuevoRegistro.getContentPane().add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 40, -1, -1));
 
         jd_buscarRegistro.setResizable(false);
         jd_buscarRegistro.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -463,6 +479,9 @@ public class Main extends javax.swing.JFrame {
         jLabel10.setText("Buscar Registro");
         jd_buscarRegistro.getContentPane().add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 20, 370, -1));
 
+        jLabel17.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGES/Degradado_4.png"))); // NOI18N
+        jd_buscarRegistro.getContentPane().add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 720, 450));
+
         jd_modificarRegistro.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -490,6 +509,9 @@ public class Main extends javax.swing.JFrame {
         jPanel3.add(jb_modificarRegistroAceptar, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 210, 130, -1));
         jPanel3.add(jl_mod_BG, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 400, 300));
 
+        jLabel18.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGES/Degradado_4.png"))); // NOI18N
+        jPanel3.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 640, 420));
+
         jd_modificarRegistro.getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 400, 300));
 
         jd_cruce.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -516,6 +538,9 @@ public class Main extends javax.swing.JFrame {
         jPanel6.add(jpb_cruce, new org.netbeans.lib.awtextra.AbsoluteConstraints(18, 270, 330, -1));
         jPanel6.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 370, 330));
 
+        jLabel27.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGES/Degradado_4.png"))); // NOI18N
+        jPanel6.add(jLabel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 640, 420));
+
         jd_cruce.getContentPane().add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 400, 330));
 
         jd_indices.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -533,6 +558,9 @@ public class Main extends javax.swing.JFrame {
         });
         jd_indices.getContentPane().add(jb_crearIndice, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 160, -1, -1));
         jd_indices.getContentPane().add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 340, 240));
+
+        jLabel28.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGES/Degradado_4.png"))); // NOI18N
+        jd_indices.getContentPane().add(jLabel28, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 640, 420));
 
         jd_buscarSecundaria.setResizable(false);
         jd_buscarSecundaria.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -606,11 +634,14 @@ public class Main extends javax.swing.JFrame {
         jLabel24.setFont(new java.awt.Font("BankGothic Md BT", 3, 36)); // NOI18N
         jLabel24.setText("Buscar Registro");
         jd_buscarSecundaria.getContentPane().add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(177, 20, 370, -1));
-        jd_buscarSecundaria.getContentPane().add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 720, 450));
+        jd_buscarSecundaria.getContentPane().add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 720, 470));
 
         jLabel26.setFont(new java.awt.Font("BankGothic Md BT", 3, 36)); // NOI18N
         jLabel26.setText("Buscar Registro");
         jd_buscarSecundaria.getContentPane().add(jLabel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 20, 370, -1));
+
+        jLabel29.setIcon(new javax.swing.ImageIcon(getClass().getResource("/IMAGES/Degradado_4.png"))); // NOI18N
+        jd_buscarSecundaria.getContentPane().add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 730, 470));
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setIconImage(new javax.swing.ImageIcon("./src/IMAGES/x.png").getImage());
@@ -1407,8 +1438,7 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_listRegistrosActionPerformed
 
     private void cruzateFIleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cruzateFIleActionPerformed
-
-        try {
+try {
 
             if (archivoCargado != null) {
                 GuardarFileActionPerformed(evt);
@@ -1417,7 +1447,7 @@ public class Main extends javax.swing.JFrame {
 
             JFileChooser jfc = new JFileChooser("./Files"); //donde deseamos que aparezca
             //crear los filtros
-            FileNameExtensionFilter filtro = new FileNameExtensionFilter("Archivos de Registro ANJ", "ANJ");
+            FileNameExtensionFilter filtro = new FileNameExtensionFilter("Archivos de Registro X", "xfile");
             //setear los filtros
             jfc.setFileFilter(filtro);//forma 1: marcado como seleccionado
             jfc.setDialogTitle("Primer archivo a cruzar");
@@ -1427,7 +1457,9 @@ public class Main extends javax.swing.JFrame {
                 return;
             }
             File fichero1 = jfc.getSelectedFile();
+
             Thread.sleep(1000);
+
             jfc.setDialogTitle("Segundo archivo a cruzar");
             seleccion = jfc.showOpenDialog(this);
             if (seleccion != JOptionPane.YES_OPTION) {
@@ -1441,8 +1473,8 @@ public class Main extends javax.swing.JFrame {
                 return;
             }
 
-            if (!fichero1.getPath().endsWith(".ANJ") || !fichero2.getPath().endsWith(".ANJ")) {
-                JOptionPane.showMessageDialog(this, "La operación fue cancelada. Los archivos deber de extension .ANJ", "SALIR", JOptionPane.INFORMATION_MESSAGE);
+            if (!fichero1.getPath().endsWith(".xfile") || !fichero2.getPath().endsWith(".xfile")) {
+                JOptionPane.showMessageDialog(this, "La operación fue cancelada. Los archivos deber de extension .xfile", "SALIR", JOptionPane.INFORMATION_MESSAGE);
                 return;
             }
 
@@ -2251,6 +2283,9 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
@@ -2260,7 +2295,12 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
+    private javax.swing.JLabel jLabel27;
+    private javax.swing.JLabel jLabel28;
+    private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel30;
+    private javax.swing.JLabel jLabel31;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -2273,7 +2313,6 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel_nombreArchivo;
     private javax.swing.JList<String> jList_campos;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenu_listarCampos;
